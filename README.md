@@ -34,14 +34,14 @@ Choose the specific category of employee you want to create. This action determi
 ---
 
 ### 2️⃣ Step 2: Enter Employee Data
-Once the type is selected, provide the necessary information. The interface allows you to input both general data (common to all employees) and specific attributes.
+Once the type is selected, provide the necessary information. The interface allows you to input both general data and specific attributes.
 
 <p align="center">
   <img src="EnterData.gif" width="650" alt="Enter Data Demo"/>
 </p>
 
 **What to do:**
-* Fill in the text fields with the employee's name, age, and unique stats (like sales volume for salesmen or team size for managers).
+* Fill in the text fields with the employee's name, hours rate and hours you want to work and press button to see the results.
 
 ---
 
