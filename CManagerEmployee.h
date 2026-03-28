@@ -8,7 +8,7 @@ protected:
 public:
 	CManagerEmployee();
 	CManagerEmployee(string name, double hour_rate, int numOfWorkers);
-	void PrintName();
+	void PrintName() const;
 	double CalculateSalaryForHours(double dWorkedHours) const;
 };
 

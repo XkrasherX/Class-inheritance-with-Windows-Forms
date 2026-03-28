@@ -16,7 +16,7 @@ CManagerEmployee::CManagerEmployee(string m_name, double m_hour_rate, int m_numO
 	numOfWorkers = m_numOfWorkers;
 }
 
-void CManagerEmployee::PrintName()
+void CManagerEmployee::PrintName() const
 {
 	cout << "Manager!" << endl;
 }
