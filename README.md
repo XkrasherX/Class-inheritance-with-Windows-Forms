@@ -29,7 +29,7 @@ Choose the specific category of employee you want to create. This action determi
 </p>
 
 **What to do:**
-* Click on the radio buttons or dropdown menu to pick between **Manager**, **Engineer**, or **Salesman**.
+* Click on the comboBox buttons between **Manager**, **Engineer**, or **Salesman**.
 
 ---
 
