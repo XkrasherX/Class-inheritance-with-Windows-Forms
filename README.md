@@ -1,85 +1,74 @@
-# 🧬 Class Inheritance with Windows Forms
+# 🧬 Class Inheritance with Windows Forms (C++/CLI)
 
 <p align="center">
-  <img src="https://img.shields.io/badge/C%23-%23239120.svg?style=for-the-badge&logo=c-sharp&logoColor=white" alt="C#"/>
+  <img src="https://img.shields.io/badge/C++-%2300599C.svg?style=for-the-badge&logo=c%2B%2B&logoColor=white" alt="C++"/>
   <img src="https://img.shields.io/badge/.NET-512BD4?style=for-the-badge&logo=.net&logoColor=white" alt=".NET"/>
-  <img src="https://img.shields.io/badge/OOP-Inheritance-orange?style=for-the-badge" alt="OOP"/>
   <img src="https://img.shields.io/badge/Visual%20Studio-5C2D91?style=for-the-badge&logo=visual-studio&logoColor=white" alt="Visual Studio"/>
+  <img src="https://img.shields.io/badge/OOP-Inheritance-orange?style=for-the-badge" alt="OOP"/>
 </p>
 
 ---
 
-## 📖 Project Description
-This repository contains a C# application designed to demonstrate the practical application of **Class Inheritance** within a desktop environment. The project showcases how base classes can be extended to create specialized logic while maintaining a clean and modular code structure.
+## 📖 Project Overview
+This application is a practical demonstration of **Object-Oriented Programming (OOP)**, specifically focusing on **Class Inheritance**. Developed using C++/CLI and Windows Forms, it manages different types of employees within a corporate structure.
 
-> [!IMPORTANT]
-> The main goal of this project is to bridge the gap between theoretical OOP concepts and real-world GUI development.
-
----
-
-## 🛠️ Key OOP Concepts Implemented
-* **Base Classes**: Defining common properties and methods.
-* **Derived Classes**: Inheriting and extending functionality from the parent class.
-* **Method Overriding**: Customizing behavior for specific subclasses.
-* **Encapsulation**: Proper use of access modifiers (`public`, `protected`, `private`).
+The project uses a base class `CEmployee` and several derived classes (`CManager`, `CIngineer`, `CSaleman`) to handle specific data and behaviors.
 
 ---
 
-## ✨ Features
-- **Dynamic Object Creation**: Instantiate different classes through the UI.
-- **Visual Representation**: See how inherited data is displayed and managed in WinForms controls.
-- **Logic Separation**: Clean separation between the UI (Forms) and the Business Logic (Classes).
+## 🕹️ Visual Guide & Usage
 
----
+Follow these steps to interact with the application:
 
-## 🖼️ Application Preview
-*Add a GIF of your app in action or a static screenshot here!*
+### 1️⃣ Step 1: Select Employee Type
+Choose the specific category of employee you want to create. This action determines which specialized class will be instantiated in the background.
 
 <p align="center">
-  <img src="https://via.placeholder.com/700x400.png?text=Showcase+Your+Inheritance+Logic+Here" width="700" alt="App Demo"/>
+  <img src="selectEmployee.gif" width="650" alt="Select Employee Demo"/>
 </p>
 
----
-
-## 🚀 Getting Started
-
-### Prerequisites
-* [.NET SDK](https://dotnet.microsoft.com/download)
-* Visual Studio 2022 (with .NET desktop development workload)
-
-### Installation
-1.  **Clone the repo**:
-    ```bash
-    git clone [https://github.com/XkrasherX/Class-inheritance-with-Windows-Forms.git](https://github.com/XkrasherX/Class-inheritance-with-Windows-Forms.git)
-    ```
-2.  **Open the Solution**:
-    Navigate to the folder and open the `.sln` file in Visual Studio.
-3.  **Run**:
-    Press `F5` to compile and start the application.
+**What to do:**
+* Click on the radio buttons or dropdown menu to pick between **Manager**, **Engineer**, or **Salesman**.
 
 ---
 
-## 📂 Project Structure
-* `BaseClass.cs` — The foundation of the logic.
-* `DerivedClass.cs` — Specialized implementations.
-* `MainForm.cs` — The GUI layer where inheritance meets the user.
-
----
-
-## 🤝 Contributing
-As this is an educational project, feedback is highly appreciated! If you have suggestions on how to improve the class hierarchy or UI logic:
-1. Fork the Project
-2. Create your Feature Branch
-3. Open a Pull Request
-
----
-
-## 👤 Author
-**XkrasherX**
-* GitHub: [@XkrasherX](https://github.com/XkrasherX)
-
----
+### 2️⃣ Step 2: Enter Employee Data
+Once the type is selected, provide the necessary information. The interface allows you to input both general data (common to all employees) and specific attributes.
 
 <p align="center">
-  ✨ <i>If you found this project helpful for learning OOP, feel free to give it a star!</i> ✨
+  <img src="EnterData.gif" width="650" alt="Enter Data Demo"/>
 </p>
+
+**What to do:**
+* Fill in the text fields with the employee's name, age, and unique stats (like sales volume for salesmen or team size for managers).
+
+---
+
+### 3️⃣ Step 3: Save and Display Data
+Process the input to create the object and see the result of the inheritance logic in action.
+
+<p align="center">
+  <img src="SaveData.gif" width="650" alt="Save Data Demo"/>
+</p>
+
+**What to do:**
+* Click the **Save** button to trigger the class constructor and display the formatted output in the list or text area.
+
+---
+
+## 🛠️ Tech Stack
+* **Language:** C++/CLI
+* **Framework:** .NET Core / Windows Forms
+* **IDE:** Visual Studio 2022
+
+## 📂 Key Project Files
+* `CEmployee.h / .cpp` — **Base Class** containing shared attributes.
+* `CManagerEmployee.h`, `CIngineerEmployee.h`, `CSalemanEmployee.h` — **Derived Classes** demonstrating inheritance.
+* `MyForm.h` — The main **GUI** implementation and event handling.
+
+---
+
+## 🚀 How to Run
+1. Clone the repository:
+   ```bash
+   git clone [https://github.com/XkrasherX/Class-inheritance-with-Windows-Forms.git](https://github.com/XkrasherX/Class-inheritance-with-Windows-Forms.git)
