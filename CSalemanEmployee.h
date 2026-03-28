@@ -6,7 +6,7 @@ protected:
 	int numOfSaledItem;
 public:
 	CSalesmanEmployee();
-	CSalesmanEmployee(string m_name, double m_hour_rate, int sold_products);
+	CSalesmanEmployee(std::string m_name, double m_hour_rate, int sold_products);
 
 	void PrintName() const;
 	double CalculateSalaryForHours(double dWorkedHours) const;

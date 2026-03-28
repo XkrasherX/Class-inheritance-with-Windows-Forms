@@ -7,7 +7,7 @@ protected:
 public:
 public:
 	CEngineerEmployee();
-	CEngineerEmployee(string m_name, double m_hour_rate, int fixed_details);
+	CEngineerEmployee(std::string m_name, double m_hour_rate, int fixed_details);
 
 	void PrintName() const;
 	double CalculateSalaryForHours(double dWorkedHours) const;
