@@ -34,9 +34,7 @@ namespace ooplab7prog {
 		}
 
 	protected:
-		/// <summary>
-		/// Clean up any resources being used.
-		/// </summary>
+
 		~MyForm()
 		{
 			if (components)
@@ -71,9 +69,8 @@ namespace ooplab7prog {
 
 
 	private:
-		/// <summary>
-		/// Required designer variable.
-		/// </summary>
+		
+
 		System::ComponentModel::Container ^components;
 
 #pragma region Windows Form Designer generated code
@@ -214,21 +211,47 @@ namespace ooplab7prog {
 	private: System::Void MyForm_Load(System::Object^ sender, System::EventArgs^ e) {}
 
 private: System::Void buttonGetResult_Click(System::Object^ sender, System::EventArgs^ e) {
-	
-	string name = marshal_as<string>(textBoxNameOfWorker->Text);
-	double h_rate = Convert::ToDouble(textBoxHourRate->Text);
-	double hours = Convert::ToDouble(textBoxHours->Text);
-	double num_of_item = Convert::ToInt32(textBoxGetNumberOfItem->Text);
-	int choise = comboBoxSelectEmployee->SelectedIndex;
-	
+	string name;
+	double h_rate = 0.0;
+	double hours = 0.0;
+	double num_of_item = 0.0;
 	double salary = 0.0;
 
+	if (!String::IsNullOrWhiteSpace(textBoxNameOfWorker->Text)) {
+	name = marshal_as<string>(textBoxNameOfWorker->Text);
+	}
+	else {
+		MessageBox::Show("You didnt enter a name!","Warning", MessageBoxButtons::OK, MessageBoxIcon::Warning);
+	}
+	if (!String::IsNullOrWhiteSpace(textBoxHourRate->Text)) {
+		h_rate = Convert::ToDouble(textBoxHourRate->Text);
+	}
+	else {
+		MessageBox::Show("You didnt enter a hours rate!", "Warning", MessageBoxButtons::OK, MessageBoxIcon::Warning);
+	}
+
+	if (!String::IsNullOrWhiteSpace(textBoxHours->Text)) {
+		hours = Convert::ToDouble(textBoxHours->Text); name = marshal_as<string>(textBoxNameOfWorker->Text);
+	}
+	else {
+		MessageBox::Show("You didnt enter a hours!", "Warning", MessageBoxButtons::OK, MessageBoxIcon::Warning);
+	}
+
+	int choise = comboBoxSelectEmployee->SelectedIndex;
+	
+
 	if (choise == 0) {
-		
+		if (!String::IsNullOrWhiteSpace(textBoxGetNumberOfItem->Text)) {
+			num_of_item = Convert::ToInt32(textBoxGetNumberOfItem->Text);
 		CManagerEmployee manager(name, h_rate, num_of_item);
 		salary = manager.CalculateSalaryForHours(hours);
-		MessageBox::Show("You selected Manager!\n You have " + num_of_item + " employeers;\nYour salary is: " + salary , "Error", MessageBoxButtons::OK, MessageBoxIcon::Asterisk);
+		MessageBox::Show("You selected Manager!\n You have " + num_of_item + " employeers;\nYour salary is: " + salary , "Success", MessageBoxButtons::OK, MessageBoxIcon::Asterisk);
+		}
+		else {
+			MessageBox::Show("You didnt enter a number of workers!", "Warning", MessageBoxButtons::OK, MessageBoxIcon::Warning);
+		}
 	}
+
 }
 };
 }
