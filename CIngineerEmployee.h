@@ -1,10 +1,15 @@
 #pragma once
 #include "CEmployee.h"
-#include <string>
-#include <iostream>
+
 class CEngineerEmployee : public CEmployee {
 protected:
 	int numOfFixedDetails;
+public:
+public:
+	CEngineerEmployee();
+	CEngineerEmployee(string m_name, double m_hour_rate, int fixed_details);
 
+	void PrintName() const;
+	double CalculateSalaryForHours(double dWorkedHours) const;
 };
 
