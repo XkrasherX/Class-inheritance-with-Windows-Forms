@@ -1,5 +1,6 @@
 #pragma once
 #include <iostream>
+#include <string.h>
 
 
 class CEmployee {
@@ -7,9 +8,10 @@ protected:
 	string name;
 	double hour_rate;
 public:
-	void PrintName();
-	double calulateSalryForHimself(int numOfItems);
-	double CalculateSalaryForHours(const double dWorkedHours);
+	CEmployee();
+	CEmployee(string m_name, double m_hour_rate);
+	void PrintName() const;
+	double CalculateSalaryForHours( double dWorkedHours) const;
 };
 
 

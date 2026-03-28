@@ -1,15 +1,10 @@
 #include "CEmployee.h"
 using namespace std;
 
-void CEmployee::PrintName() { cout << "Employee!" << endl; }
+CEmployee::CEmployee() : name("Worker"), hour_rate(4) {}
 
-double CEmployee::calulateSalryForHimself(int numOfItems) {	return 0.0; }
+CEmployee::CEmployee(string m_name, double m_hour_rate) : name(m_name), hour_rate(m_hour_rate) {}
 
-double CEmployee::CalculateSalaryForHours(const double dWorkedHours) { return 0.0; }
+void CEmployee::PrintName() const { cout << "Employee!" << endl; }
 
-void CManagerEmployee::CEmployee::PrintName() { cout << "Manager" << endl; }
-
-void CSalesmanEmployee::CEmployee::PrintName() { cout << "Salesman" << endl; }
-
-void CEngineerEmployee::CEmployee::PrintName() { cout << "Engineer" << endl; }
-
+double CEmployee::CalculateSalaryForHours(double dWorkedHours) const { return dWorkedHours * hour_rate; }
