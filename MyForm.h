@@ -262,6 +262,17 @@ private: System::Void buttonGetResult_Click(System::Object^ sender, System::Even
 			MessageBox::Show("You didnt enter a number of saled items!", "Warning", MessageBoxButtons::OK, MessageBoxIcon::Warning);
 		}
 	}
+	else if (choise == 2) {
+		if (!String::IsNullOrWhiteSpace(textBoxGetNumberOfItem->Text)) {
+			num_of_item = Convert::ToInt32(textBoxGetNumberOfItem->Text);
+			CSalesmanEmployee saleman(name, h_rate, num_of_item);
+			salary = saleman.CalculateSalaryForHours(hours);
+			MessageBox::Show("You selected Engineer!\n You created " + num_of_item + " details;\nYour salary is: " + salary, "Success", MessageBoxButtons::OK, MessageBoxIcon::Asterisk);
+		}
+		else {
+			MessageBox::Show("You didnt enter a number of created details!", "Warning", MessageBoxButtons::OK, MessageBoxIcon::Warning);
+		}
+	}
 }
 };
 }
