@@ -305,7 +305,7 @@ private: System::Void buttonGetResult_Click(System::Object^ sender, System::Even
 			num_of_item = Convert::ToInt32(textBoxGetNumberOfItem->Text);
 		CManagerEmployee manager(name, h_rate, num_of_item);
 		salary = manager.CalculateSalaryForHours(hours);
-		MessageBox::Show("You selected Manager!\n You have " + num_of_item + " employeers;\nYour salary is: " + salary , "Success", MessageBoxButtons::OK, MessageBoxIcon::Asterisk);
+		MessageBox::Show("You selected Manager!\nYou have " + num_of_item + " employeers;\nYour salary is: " + salary + "$", "Success", MessageBoxButtons::OK, MessageBoxIcon::Asterisk);
 		}
 		else {
 			MessageBox::Show("You didnt enter a number of workers!", "Warning", MessageBoxButtons::OK, MessageBoxIcon::Warning);
@@ -317,7 +317,7 @@ private: System::Void buttonGetResult_Click(System::Object^ sender, System::Even
 			num_of_item = Convert::ToInt32(textBoxGetNumberOfItem->Text);
 			CSalesmanEmployee saleman(name, h_rate, num_of_item);
 			salary = saleman.CalculateSalaryForHours(hours);
-			MessageBox::Show("You selected Saleman!\n You saled " + num_of_item + " products;\nYour salary is: " + salary, "Success", MessageBoxButtons::OK, MessageBoxIcon::Asterisk);
+			MessageBox::Show("You selected Saleman!\nYou saled " + num_of_item + " products;\nYour salary is: " + salary + "$", "Success", MessageBoxButtons::OK, MessageBoxIcon::Asterisk);
 		}
 		else {
 			MessageBox::Show("You didnt enter a number of saled items!", "Warning", MessageBoxButtons::OK, MessageBoxIcon::Warning);
@@ -330,7 +330,7 @@ private: System::Void buttonGetResult_Click(System::Object^ sender, System::Even
 			num_of_item = Convert::ToInt32(textBoxGetNumberOfItem->Text);
 			CSalesmanEmployee saleman(name, h_rate, num_of_item);
 			salary = saleman.CalculateSalaryForHours(hours);
-			MessageBox::Show("You selected Engineer!\n You created " + num_of_item + " details;\nYour salary is: " + salary, "Success", MessageBoxButtons::OK, MessageBoxIcon::Asterisk);
+			MessageBox::Show("You selected Engineer!\nYou created " + num_of_item + " details;\nYour salary is: " + salary +"$", "Success", MessageBoxButtons::OK, MessageBoxIcon::Asterisk);
 		}
 		else {
 			MessageBox::Show("You didnt enter a number of created details!", "Warning", MessageBoxButtons::OK, MessageBoxIcon::Warning);
@@ -369,7 +369,7 @@ private: System::Void saveToolStripMenuItem_Click(System::Object^ sender, System
 			out_file << "You created new employee: " << employeeType << endl;
 			out_file << "Your name is: " << marshal_as<string>(textBoxNameOfWorker->Text) << endl;
 			out_file << "Your hours rate is: " << h_rate << endl;
-			out_file << "Your salary per hour is: " << salary << endl;
+			out_file << "Your salary per hour is: " << salary<<"$" << endl;
 
 			out_file.close();
 		}
