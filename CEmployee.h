@@ -1,28 +1,15 @@
 #pragma once
 #include <iostream>
-using namespace std;
+
 
 class CEmployee {
+protected:
+	string name;
+	double hour_rate;
 public:
 	void PrintName();
 	double calulateSalryForHimself(int numOfItems);
+	double CalculateSalaryForHours(const double dWorkedHours);
 };
 
-class CManagerEmployee : public CEmployee {
-protected:
-	int numOfWorkers;
-};
 
-class CSalesmanEmployee : protected CEmployee {
-protected:
-	int numOfSaledItem;
-
-};
-
-class CEngineerEmployee : public CEmployee {
-protected:
-	int numOfFixedDetails;
-
-};
-
-double CalculateSalaryForHours(const double dWorkedHours);

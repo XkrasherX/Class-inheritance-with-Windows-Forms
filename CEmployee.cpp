@@ -1,15 +1,15 @@
 #include "CEmployee.h"
+using namespace std;
 
-
-void CEmployee::PrintName() { cout << "This is CEmployee class!" << endl; }
+void CEmployee::PrintName() { cout << "Employee!" << endl; }
 
 double CEmployee::calulateSalryForHimself(int numOfItems) {	return 0.0; }
 
-double CalculateSalaryForHours(const double dWorkedHours) { return dWorkedHours * 8.0; }
+double CEmployee::CalculateSalaryForHours(const double dWorkedHours) { return 0.0; }
 
-void CManagerEmployee::CEmployee::PrintName() { cout << "This is CManagerEmployee class!" << endl; }
+void CManagerEmployee::CEmployee::PrintName() { cout << "Manager" << endl; }
 
-void CSalesmanEmployee::CEmployee::PrintName() { cout << "This is CSalesmanEmployee class!" << endl; }
+void CSalesmanEmployee::CEmployee::PrintName() { cout << "Salesman" << endl; }
 
-void CEngineerEmployee::CEmployee::PrintName() { cout << "This is CEngineerEmployee class!" << endl; }
+void CEngineerEmployee::CEmployee::PrintName() { cout << "Engineer" << endl; }
 
