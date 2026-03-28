@@ -7,6 +7,7 @@
 
 
 #include <msclr/marshal_cppstd.h>
+#include <fstream>
 
 namespace ooplab7prog {
 
@@ -65,11 +66,22 @@ namespace ooplab7prog {
 	private: System::Windows::Forms::Label^ labelHours;
 	private: System::Windows::Forms::Label^ labelSelectEmployee;
 	private: System::Windows::Forms::Label^ labelGetNumberOfItem;
+	private: System::Windows::Forms::SaveFileDialog^ saveFileTxt;
+	private: System::Windows::Forms::MenuStrip^ menuStrip;
+
+
+	private: System::Windows::Forms::ToolStripMenuItem^ fileToolStripMenuItem;
+	private: System::Windows::Forms::ToolStripMenuItem^ saveToolStripMenuItem;
+	private: System::Windows::Forms::ToolStripMenuItem^ exitToolStripMenuItem;
 
 
 
 	private:
-		
+		double salary = 0.0;
+		double h_rate = 0.0;
+		double hours = 0.0;
+		int num_of_item = 0;
+		int choise = 0;
 
 		System::ComponentModel::Container ^components;
 
@@ -91,11 +103,17 @@ namespace ooplab7prog {
 			this->labelHours = (gcnew System::Windows::Forms::Label());
 			this->labelSelectEmployee = (gcnew System::Windows::Forms::Label());
 			this->labelGetNumberOfItem = (gcnew System::Windows::Forms::Label());
+			this->saveFileTxt = (gcnew System::Windows::Forms::SaveFileDialog());
+			this->menuStrip = (gcnew System::Windows::Forms::MenuStrip());
+			this->fileToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
+			this->saveToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
+			this->exitToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
+			this->menuStrip->SuspendLayout();
 			this->SuspendLayout();
 			// 
 			// buttonGetResult
 			// 
-			this->buttonGetResult->Location = System::Drawing::Point(277, 367);
+			this->buttonGetResult->Location = System::Drawing::Point(277, 377);
 			this->buttonGetResult->Name = L"buttonGetResult";
 			this->buttonGetResult->Size = System::Drawing::Size(90, 55);
 			this->buttonGetResult->TabIndex = 0;
@@ -186,6 +204,42 @@ namespace ooplab7prog {
 			this->labelGetNumberOfItem->Size = System::Drawing::Size(0, 16);
 			this->labelGetNumberOfItem->TabIndex = 13;
 			// 
+			// menuStrip
+			// 
+			this->menuStrip->ImageScalingSize = System::Drawing::Size(20, 20);
+			this->menuStrip->Items->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(1) { this->fileToolStripMenuItem });
+			this->menuStrip->Location = System::Drawing::Point(0, 0);
+			this->menuStrip->Name = L"menuStrip";
+			this->menuStrip->Size = System::Drawing::Size(670, 28);
+			this->menuStrip->TabIndex = 14;
+			this->menuStrip->Text = L"menuStrip1";
+			// 
+			// fileToolStripMenuItem
+			// 
+			this->fileToolStripMenuItem->DropDownItems->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(2) {
+				this->saveToolStripMenuItem,
+					this->exitToolStripMenuItem
+			});
+			this->fileToolStripMenuItem->Name = L"fileToolStripMenuItem";
+			this->fileToolStripMenuItem->Size = System::Drawing::Size(46, 24);
+			this->fileToolStripMenuItem->Text = L"File";
+			// 
+			// saveToolStripMenuItem
+			// 
+			this->saveToolStripMenuItem->Name = L"saveToolStripMenuItem";
+			this->saveToolStripMenuItem->ShortcutKeys = static_cast<System::Windows::Forms::Keys>((System::Windows::Forms::Keys::Control | System::Windows::Forms::Keys::S));
+			this->saveToolStripMenuItem->Size = System::Drawing::Size(224, 26);
+			this->saveToolStripMenuItem->Text = L"Save";
+			this->saveToolStripMenuItem->Click += gcnew System::EventHandler(this, &MyForm::saveToolStripMenuItem_Click);
+			// 
+			// exitToolStripMenuItem
+			// 
+			this->exitToolStripMenuItem->Name = L"exitToolStripMenuItem";
+			this->exitToolStripMenuItem->ShortcutKeys = static_cast<System::Windows::Forms::Keys>((System::Windows::Forms::Keys::Alt | System::Windows::Forms::Keys::F4));
+			this->exitToolStripMenuItem->Size = System::Drawing::Size(224, 26);
+			this->exitToolStripMenuItem->Text = L"Exit";
+			this->exitToolStripMenuItem->Click += gcnew System::EventHandler(this, &MyForm::exitToolStripMenuItem_Click);
+			// 
 			// MyForm
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(8, 16);
@@ -202,9 +256,14 @@ namespace ooplab7prog {
 			this->Controls->Add(this->comboBoxSelectEmployee);
 			this->Controls->Add(this->labelNameOfWorker);
 			this->Controls->Add(this->buttonGetResult);
+			this->Controls->Add(this->menuStrip);
+			this->MainMenuStrip = this->menuStrip;
 			this->Name = L"MyForm";
-			this->Text = L"MyForm";
+			this->StartPosition = System::Windows::Forms::FormStartPosition::CenterScreen;
+			this->Text = L"oop_lab7_prog";
 			this->Load += gcnew System::EventHandler(this, &MyForm::MyForm_Load);
+			this->menuStrip->ResumeLayout(false);
+			this->menuStrip->PerformLayout();
 			this->ResumeLayout(false);
 			this->PerformLayout();
 
@@ -214,10 +273,7 @@ namespace ooplab7prog {
 
 private: System::Void buttonGetResult_Click(System::Object^ sender, System::EventArgs^ e) {
 	string name;
-	double h_rate = 0.0;
-	double hours = 0.0;
-	double num_of_item = 0.0;
-	double salary = 0.0;
+	
 
 	if (!String::IsNullOrWhiteSpace(textBoxNameOfWorker->Text)) {
 	name = marshal_as<string>(textBoxNameOfWorker->Text);
@@ -225,6 +281,7 @@ private: System::Void buttonGetResult_Click(System::Object^ sender, System::Even
 	else {
 		MessageBox::Show("You didnt enter a name!","Warning", MessageBoxButtons::OK, MessageBoxIcon::Warning);
 	}
+
 	if (!String::IsNullOrWhiteSpace(textBoxHourRate->Text)) {
 		h_rate = Convert::ToDouble(textBoxHourRate->Text);
 	}
@@ -233,17 +290,17 @@ private: System::Void buttonGetResult_Click(System::Object^ sender, System::Even
 	}
 
 	if (!String::IsNullOrWhiteSpace(textBoxHours->Text)) {
-		hours = Convert::ToDouble(textBoxHours->Text); name = marshal_as<string>(textBoxNameOfWorker->Text);
+		hours = Convert::ToDouble(textBoxHours->Text);
 	}
 	else {
 		MessageBox::Show("You didnt enter a hours!", "Warning", MessageBoxButtons::OK, MessageBoxIcon::Warning);
 	}
 
-	int choise = comboBoxSelectEmployee->SelectedIndex;
+	choise = comboBoxSelectEmployee->SelectedIndex;
 	
 
 	if (choise == 0) {
-		
+
 		if (!String::IsNullOrWhiteSpace(textBoxGetNumberOfItem->Text)) {
 			num_of_item = Convert::ToInt32(textBoxGetNumberOfItem->Text);
 		CManagerEmployee manager(name, h_rate, num_of_item);
@@ -260,13 +317,14 @@ private: System::Void buttonGetResult_Click(System::Object^ sender, System::Even
 			num_of_item = Convert::ToInt32(textBoxGetNumberOfItem->Text);
 			CSalesmanEmployee saleman(name, h_rate, num_of_item);
 			salary = saleman.CalculateSalaryForHours(hours);
-			MessageBox::Show("You selected SaleMan!\n You saled " + num_of_item + " products;\nYour salary is: " + salary, "Success", MessageBoxButtons::OK, MessageBoxIcon::Asterisk);
+			MessageBox::Show("You selected Saleman!\n You saled " + num_of_item + " products;\nYour salary is: " + salary, "Success", MessageBoxButtons::OK, MessageBoxIcon::Asterisk);
 		}
 		else {
 			MessageBox::Show("You didnt enter a number of saled items!", "Warning", MessageBoxButtons::OK, MessageBoxIcon::Warning);
 		}
 	}
 	else if (choise == 2) {
+
 		labelGetNumberOfItem->Text = "Enter number of created details";
 		if (!String::IsNullOrWhiteSpace(textBoxGetNumberOfItem->Text)) {
 			num_of_item = Convert::ToInt32(textBoxGetNumberOfItem->Text);
@@ -294,6 +352,28 @@ private: System::Void comboBoxSelectEmployee_SelectedIndexChanged(System::Object
 		break;
 	default:
 		break;
+	}
+}
+private: System::Void exitToolStripMenuItem_Click(System::Object^ sender, System::EventArgs^ e) {
+	this->Close();
+}
+private: System::Void saveToolStripMenuItem_Click(System::Object^ sender, System::EventArgs^ e) {
+	SaveFileDialog^ path = gcnew SaveFileDialog();
+	path->Filter = "Text files (*.txt)|*.txt";
+	if (path->ShowDialog() == System::Windows::Forms::DialogResult::OK) {
+		string file_path = marshal_as<string>(path->FileName);
+		ofstream out_file(file_path);
+
+		if (out_file.is_open()) {
+			string employeeType = marshal_as<string>(comboBoxSelectEmployee->SelectedItem->ToString());
+			out_file << "You created new employee: " << employeeType << endl;
+			out_file << "Your name is: " << marshal_as<string>(textBoxNameOfWorker->Text) << endl;
+			out_file << "Your hours rate is: " << h_rate << endl;
+			out_file << "Your salary per hour is: " << salary << endl;
+
+			out_file.close();
+		}
+		MessageBox::Show("Your file saved successfully!", "Success", MessageBoxButtons::OK, MessageBoxIcon::Asterisk);
 	}
 }
 };
