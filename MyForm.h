@@ -95,7 +95,7 @@ namespace ooplab7prog {
 			// 
 			// buttonGetResult
 			// 
-			this->buttonGetResult->Location = System::Drawing::Point(372, 415);
+			this->buttonGetResult->Location = System::Drawing::Point(277, 367);
 			this->buttonGetResult->Name = L"buttonGetResult";
 			this->buttonGetResult->Size = System::Drawing::Size(90, 55);
 			this->buttonGetResult->TabIndex = 0;
@@ -106,7 +106,7 @@ namespace ooplab7prog {
 			// labelNameOfWorker
 			// 
 			this->labelNameOfWorker->AutoSize = true;
-			this->labelNameOfWorker->Location = System::Drawing::Point(140, 237);
+			this->labelNameOfWorker->Location = System::Drawing::Point(81, 179);
 			this->labelNameOfWorker->Name = L"labelNameOfWorker";
 			this->labelNameOfWorker->Size = System::Drawing::Size(44, 16);
 			this->labelNameOfWorker->TabIndex = 1;
@@ -114,37 +114,39 @@ namespace ooplab7prog {
 			// 
 			// comboBoxSelectEmployee
 			// 
+			this->comboBoxSelectEmployee->DropDownStyle = System::Windows::Forms::ComboBoxStyle::DropDownList;
 			this->comboBoxSelectEmployee->FormattingEnabled = true;
 			this->comboBoxSelectEmployee->Items->AddRange(gcnew cli::array< System::Object^  >(3) { L"Manager", L"Saleman", L"Engineer" });
-			this->comboBoxSelectEmployee->Location = System::Drawing::Point(319, 173);
+			this->comboBoxSelectEmployee->Location = System::Drawing::Point(260, 115);
 			this->comboBoxSelectEmployee->Name = L"comboBoxSelectEmployee";
 			this->comboBoxSelectEmployee->Size = System::Drawing::Size(121, 24);
 			this->comboBoxSelectEmployee->TabIndex = 4;
+			this->comboBoxSelectEmployee->SelectedIndexChanged += gcnew System::EventHandler(this, &MyForm::comboBoxSelectEmployee_SelectedIndexChanged);
 			// 
 			// textBoxNameOfWorker
 			// 
-			this->textBoxNameOfWorker->Location = System::Drawing::Point(143, 267);
+			this->textBoxNameOfWorker->Location = System::Drawing::Point(84, 209);
 			this->textBoxNameOfWorker->Name = L"textBoxNameOfWorker";
 			this->textBoxNameOfWorker->Size = System::Drawing::Size(100, 22);
 			this->textBoxNameOfWorker->TabIndex = 5;
 			// 
 			// textBoxHourRate
 			// 
-			this->textBoxHourRate->Location = System::Drawing::Point(327, 267);
+			this->textBoxHourRate->Location = System::Drawing::Point(268, 209);
 			this->textBoxHourRate->Name = L"textBoxHourRate";
 			this->textBoxHourRate->Size = System::Drawing::Size(100, 22);
 			this->textBoxHourRate->TabIndex = 6;
 			// 
 			// textBoxHours
 			// 
-			this->textBoxHours->Location = System::Drawing::Point(498, 267);
+			this->textBoxHours->Location = System::Drawing::Point(439, 209);
 			this->textBoxHours->Name = L"textBoxHours";
 			this->textBoxHours->Size = System::Drawing::Size(100, 22);
 			this->textBoxHours->TabIndex = 7;
 			// 
 			// textBoxGetNumberOfItem
 			// 
-			this->textBoxGetNumberOfItem->Location = System::Drawing::Point(143, 362);
+			this->textBoxGetNumberOfItem->Location = System::Drawing::Point(84, 304);
 			this->textBoxGetNumberOfItem->Name = L"textBoxGetNumberOfItem";
 			this->textBoxGetNumberOfItem->Size = System::Drawing::Size(100, 22);
 			this->textBoxGetNumberOfItem->TabIndex = 9;
@@ -152,7 +154,7 @@ namespace ooplab7prog {
 			// labelHoursRate
 			// 
 			this->labelHoursRate->AutoSize = true;
-			this->labelHoursRate->Location = System::Drawing::Point(324, 237);
+			this->labelHoursRate->Location = System::Drawing::Point(265, 179);
 			this->labelHoursRate->Name = L"labelHoursRate";
 			this->labelHoursRate->Size = System::Drawing::Size(69, 16);
 			this->labelHoursRate->TabIndex = 10;
@@ -161,7 +163,7 @@ namespace ooplab7prog {
 			// labelHours
 			// 
 			this->labelHours->AutoSize = true;
-			this->labelHours->Location = System::Drawing::Point(495, 237);
+			this->labelHours->Location = System::Drawing::Point(436, 179);
 			this->labelHours->Name = L"labelHours";
 			this->labelHours->Size = System::Drawing::Size(43, 16);
 			this->labelHours->TabIndex = 11;
@@ -170,7 +172,7 @@ namespace ooplab7prog {
 			// labelSelectEmployee
 			// 
 			this->labelSelectEmployee->AutoSize = true;
-			this->labelSelectEmployee->Location = System::Drawing::Point(316, 135);
+			this->labelSelectEmployee->Location = System::Drawing::Point(257, 77);
 			this->labelSelectEmployee->Name = L"labelSelectEmployee";
 			this->labelSelectEmployee->Size = System::Drawing::Size(110, 16);
 			this->labelSelectEmployee->TabIndex = 12;
@@ -179,7 +181,7 @@ namespace ooplab7prog {
 			// labelGetNumberOfItem
 			// 
 			this->labelGetNumberOfItem->AutoSize = true;
-			this->labelGetNumberOfItem->Location = System::Drawing::Point(151, 333);
+			this->labelGetNumberOfItem->Location = System::Drawing::Point(81, 275);
 			this->labelGetNumberOfItem->Name = L"labelGetNumberOfItem";
 			this->labelGetNumberOfItem->Size = System::Drawing::Size(0, 16);
 			this->labelGetNumberOfItem->TabIndex = 13;
@@ -188,7 +190,7 @@ namespace ooplab7prog {
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(8, 16);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
-			this->ClientSize = System::Drawing::Size(822, 667);
+			this->ClientSize = System::Drawing::Size(670, 523);
 			this->Controls->Add(this->labelGetNumberOfItem);
 			this->Controls->Add(this->labelSelectEmployee);
 			this->Controls->Add(this->labelHours);
@@ -241,6 +243,7 @@ private: System::Void buttonGetResult_Click(System::Object^ sender, System::Even
 	
 
 	if (choise == 0) {
+		
 		if (!String::IsNullOrWhiteSpace(textBoxGetNumberOfItem->Text)) {
 			num_of_item = Convert::ToInt32(textBoxGetNumberOfItem->Text);
 		CManagerEmployee manager(name, h_rate, num_of_item);
@@ -252,6 +255,7 @@ private: System::Void buttonGetResult_Click(System::Object^ sender, System::Even
 		}
 	}
 	else if (choise == 1) {
+		
 		if (!String::IsNullOrWhiteSpace(textBoxGetNumberOfItem->Text)) {
 			num_of_item = Convert::ToInt32(textBoxGetNumberOfItem->Text);
 			CSalesmanEmployee saleman(name, h_rate, num_of_item);
@@ -263,6 +267,7 @@ private: System::Void buttonGetResult_Click(System::Object^ sender, System::Even
 		}
 	}
 	else if (choise == 2) {
+		labelGetNumberOfItem->Text = "Enter number of created details";
 		if (!String::IsNullOrWhiteSpace(textBoxGetNumberOfItem->Text)) {
 			num_of_item = Convert::ToInt32(textBoxGetNumberOfItem->Text);
 			CSalesmanEmployee saleman(name, h_rate, num_of_item);
@@ -272,6 +277,23 @@ private: System::Void buttonGetResult_Click(System::Object^ sender, System::Even
 		else {
 			MessageBox::Show("You didnt enter a number of created details!", "Warning", MessageBoxButtons::OK, MessageBoxIcon::Warning);
 		}
+	}
+}
+private: System::Void comboBoxSelectEmployee_SelectedIndexChanged(System::Object^ sender, System::EventArgs^ e) {
+	int choise = comboBoxSelectEmployee->SelectedIndex;
+	switch (choise)
+	{
+	case 0:
+		labelGetNumberOfItem->Text = "Enter number of workers";
+		break;
+	case 1:
+		labelGetNumberOfItem->Text = "Enter number of saled products";
+		break;
+	case 2:
+		labelGetNumberOfItem->Text = "Enter number of created details";
+		break;
+	default:
+		break;
 	}
 }
 };
