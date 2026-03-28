@@ -113,7 +113,7 @@ namespace ooplab7prog {
 			// 
 			// buttonGetResult
 			// 
-			this->buttonGetResult->Location = System::Drawing::Point(277, 377);
+			this->buttonGetResult->Location = System::Drawing::Point(181, 332);
 			this->buttonGetResult->Name = L"buttonGetResult";
 			this->buttonGetResult->Size = System::Drawing::Size(90, 55);
 			this->buttonGetResult->TabIndex = 0;
@@ -124,7 +124,7 @@ namespace ooplab7prog {
 			// labelNameOfWorker
 			// 
 			this->labelNameOfWorker->AutoSize = true;
-			this->labelNameOfWorker->Location = System::Drawing::Point(81, 179);
+			this->labelNameOfWorker->Location = System::Drawing::Point(58, 157);
 			this->labelNameOfWorker->Name = L"labelNameOfWorker";
 			this->labelNameOfWorker->Size = System::Drawing::Size(44, 16);
 			this->labelNameOfWorker->TabIndex = 1;
@@ -135,7 +135,7 @@ namespace ooplab7prog {
 			this->comboBoxSelectEmployee->DropDownStyle = System::Windows::Forms::ComboBoxStyle::DropDownList;
 			this->comboBoxSelectEmployee->FormattingEnabled = true;
 			this->comboBoxSelectEmployee->Items->AddRange(gcnew cli::array< System::Object^  >(3) { L"Manager", L"Saleman", L"Engineer" });
-			this->comboBoxSelectEmployee->Location = System::Drawing::Point(260, 115);
+			this->comboBoxSelectEmployee->Location = System::Drawing::Point(181, 89);
 			this->comboBoxSelectEmployee->Name = L"comboBoxSelectEmployee";
 			this->comboBoxSelectEmployee->Size = System::Drawing::Size(121, 24);
 			this->comboBoxSelectEmployee->TabIndex = 4;
@@ -143,28 +143,28 @@ namespace ooplab7prog {
 			// 
 			// textBoxNameOfWorker
 			// 
-			this->textBoxNameOfWorker->Location = System::Drawing::Point(84, 209);
+			this->textBoxNameOfWorker->Location = System::Drawing::Point(30, 187);
 			this->textBoxNameOfWorker->Name = L"textBoxNameOfWorker";
 			this->textBoxNameOfWorker->Size = System::Drawing::Size(100, 22);
 			this->textBoxNameOfWorker->TabIndex = 5;
 			// 
 			// textBoxHourRate
 			// 
-			this->textBoxHourRate->Location = System::Drawing::Point(268, 209);
+			this->textBoxHourRate->Location = System::Drawing::Point(190, 187);
 			this->textBoxHourRate->Name = L"textBoxHourRate";
 			this->textBoxHourRate->Size = System::Drawing::Size(100, 22);
 			this->textBoxHourRate->TabIndex = 6;
 			// 
 			// textBoxHours
 			// 
-			this->textBoxHours->Location = System::Drawing::Point(439, 209);
+			this->textBoxHours->Location = System::Drawing::Point(359, 187);
 			this->textBoxHours->Name = L"textBoxHours";
 			this->textBoxHours->Size = System::Drawing::Size(100, 22);
 			this->textBoxHours->TabIndex = 7;
 			// 
 			// textBoxGetNumberOfItem
 			// 
-			this->textBoxGetNumberOfItem->Location = System::Drawing::Point(84, 304);
+			this->textBoxGetNumberOfItem->Location = System::Drawing::Point(181, 278);
 			this->textBoxGetNumberOfItem->Name = L"textBoxGetNumberOfItem";
 			this->textBoxGetNumberOfItem->Size = System::Drawing::Size(100, 22);
 			this->textBoxGetNumberOfItem->TabIndex = 9;
@@ -172,7 +172,7 @@ namespace ooplab7prog {
 			// labelHoursRate
 			// 
 			this->labelHoursRate->AutoSize = true;
-			this->labelHoursRate->Location = System::Drawing::Point(265, 179);
+			this->labelHoursRate->Location = System::Drawing::Point(202, 157);
 			this->labelHoursRate->Name = L"labelHoursRate";
 			this->labelHoursRate->Size = System::Drawing::Size(69, 16);
 			this->labelHoursRate->TabIndex = 10;
@@ -181,7 +181,7 @@ namespace ooplab7prog {
 			// labelHours
 			// 
 			this->labelHours->AutoSize = true;
-			this->labelHours->Location = System::Drawing::Point(436, 179);
+			this->labelHours->Location = System::Drawing::Point(385, 157);
 			this->labelHours->Name = L"labelHours";
 			this->labelHours->Size = System::Drawing::Size(43, 16);
 			this->labelHours->TabIndex = 11;
@@ -190,7 +190,7 @@ namespace ooplab7prog {
 			// labelSelectEmployee
 			// 
 			this->labelSelectEmployee->AutoSize = true;
-			this->labelSelectEmployee->Location = System::Drawing::Point(257, 77);
+			this->labelSelectEmployee->Location = System::Drawing::Point(187, 41);
 			this->labelSelectEmployee->Name = L"labelSelectEmployee";
 			this->labelSelectEmployee->Size = System::Drawing::Size(110, 16);
 			this->labelSelectEmployee->TabIndex = 12;
@@ -199,7 +199,7 @@ namespace ooplab7prog {
 			// labelGetNumberOfItem
 			// 
 			this->labelGetNumberOfItem->AutoSize = true;
-			this->labelGetNumberOfItem->Location = System::Drawing::Point(81, 275);
+			this->labelGetNumberOfItem->Location = System::Drawing::Point(178, 249);
 			this->labelGetNumberOfItem->Name = L"labelGetNumberOfItem";
 			this->labelGetNumberOfItem->Size = System::Drawing::Size(0, 16);
 			this->labelGetNumberOfItem->TabIndex = 13;
@@ -210,7 +210,7 @@ namespace ooplab7prog {
 			this->menuStrip->Items->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(1) { this->fileToolStripMenuItem });
 			this->menuStrip->Location = System::Drawing::Point(0, 0);
 			this->menuStrip->Name = L"menuStrip";
-			this->menuStrip->Size = System::Drawing::Size(670, 28);
+			this->menuStrip->Size = System::Drawing::Size(482, 28);
 			this->menuStrip->TabIndex = 14;
 			this->menuStrip->Text = L"menuStrip1";
 			// 
@@ -228,7 +228,7 @@ namespace ooplab7prog {
 			// 
 			this->saveToolStripMenuItem->Name = L"saveToolStripMenuItem";
 			this->saveToolStripMenuItem->ShortcutKeys = static_cast<System::Windows::Forms::Keys>((System::Windows::Forms::Keys::Control | System::Windows::Forms::Keys::S));
-			this->saveToolStripMenuItem->Size = System::Drawing::Size(224, 26);
+			this->saveToolStripMenuItem->Size = System::Drawing::Size(173, 26);
 			this->saveToolStripMenuItem->Text = L"Save";
 			this->saveToolStripMenuItem->Click += gcnew System::EventHandler(this, &MyForm::saveToolStripMenuItem_Click);
 			// 
@@ -236,7 +236,7 @@ namespace ooplab7prog {
 			// 
 			this->exitToolStripMenuItem->Name = L"exitToolStripMenuItem";
 			this->exitToolStripMenuItem->ShortcutKeys = static_cast<System::Windows::Forms::Keys>((System::Windows::Forms::Keys::Alt | System::Windows::Forms::Keys::F4));
-			this->exitToolStripMenuItem->Size = System::Drawing::Size(224, 26);
+			this->exitToolStripMenuItem->Size = System::Drawing::Size(173, 26);
 			this->exitToolStripMenuItem->Text = L"Exit";
 			this->exitToolStripMenuItem->Click += gcnew System::EventHandler(this, &MyForm::exitToolStripMenuItem_Click);
 			// 
@@ -244,16 +244,16 @@ namespace ooplab7prog {
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(8, 16);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
-			this->ClientSize = System::Drawing::Size(670, 523);
-			this->Controls->Add(this->labelGetNumberOfItem);
+			this->ClientSize = System::Drawing::Size(482, 403);
+			this->Controls->Add(this->comboBoxSelectEmployee);
 			this->Controls->Add(this->labelSelectEmployee);
+			this->Controls->Add(this->labelGetNumberOfItem);
 			this->Controls->Add(this->labelHours);
 			this->Controls->Add(this->labelHoursRate);
 			this->Controls->Add(this->textBoxGetNumberOfItem);
 			this->Controls->Add(this->textBoxHours);
 			this->Controls->Add(this->textBoxHourRate);
 			this->Controls->Add(this->textBoxNameOfWorker);
-			this->Controls->Add(this->comboBoxSelectEmployee);
 			this->Controls->Add(this->labelNameOfWorker);
 			this->Controls->Add(this->buttonGetResult);
 			this->Controls->Add(this->menuStrip);
