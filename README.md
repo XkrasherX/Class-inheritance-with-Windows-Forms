@@ -5,6 +5,7 @@
   <img src="https://img.shields.io/badge/.NET-512BD4?style=for-the-badge&logo=.net&logoColor=white" alt=".NET"/>
   <img src="https://img.shields.io/badge/Visual%20Studio-5C2D91?style=for-the-badge&logo=visual-studio&logoColor=white" alt="Visual Studio"/>
   <img src="https://img.shields.io/badge/OOP-Inheritance-orange?style=for-the-badge" alt="OOP"/>
+    <img src="https://img.shields.io/badge/Windows%20Forms-0078D4?style=for-the-badge&logo=windows&logoColor=white" alt="WinForms Badge"/>
 </p>
 
 ---
@@ -72,3 +73,19 @@ Process the input to create the object and see the result of the inheritance log
 1. Clone the repository:
    ```bash
    git clone [https://github.com/XkrasherX/Class-inheritance-with-Windows-Forms.git](https://github.com/XkrasherX/Class-inheritance-with-Windows-Forms.git)
+
+---
+
+## 👤 Author
+**XkrasherX**
+<p>
+  <a href="https://github.com/XkrasherX">
+    <img src="https://img.shields.io/badge/GitHub-gray?style=for-the-badge&logo=github" />
+  </a>
+</p>
+
+---
+
+<p align="center">
+  ✨ <i>If you found this project helpful for learning OOP, feel free to give it a star!</i> ✨
+</p>
