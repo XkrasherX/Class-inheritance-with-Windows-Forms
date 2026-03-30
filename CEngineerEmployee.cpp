@@ -1,4 +1,4 @@
-#include "CIngineerEmployee.h"
+#include "CEngineerEmployee.h"
 #include <iostream>
 using namespace std;
 
@@ -26,4 +26,3 @@ double CEngineerEmployee::CalculateSalaryForHours(double dWorkedHours) const
 	double bonusByWorker = numOfFixedDetails * 15.0;
 	return baseSalary + bonusByWorker;
 }
-

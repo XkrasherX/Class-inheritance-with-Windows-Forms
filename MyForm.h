@@ -3,7 +3,7 @@
 #include "CEmployee.h"
 #include "CManagerEmployee.h"
 #include "CSalemanEmployee.h"
-#include "CIngineerEmployee.h"
+#include "CEngineerEmployee.h"
 
 
 #include <msclr/marshal_cppstd.h>
@@ -121,7 +121,7 @@ namespace ooplab7prog {
 			// labelNameOfWorker
 			// 
 			this->labelNameOfWorker->AutoSize = true;
-			this->labelNameOfWorker->Location = System::Drawing::Point(135, 152);
+			this->labelNameOfWorker->Location = System::Drawing::Point(134, 172);
 			this->labelNameOfWorker->Name = L"labelNameOfWorker";
 			this->labelNameOfWorker->Size = System::Drawing::Size(44, 16);
 			this->labelNameOfWorker->TabIndex = 1;
@@ -140,14 +140,14 @@ namespace ooplab7prog {
 			// 
 			// textBoxNameOfWorker
 			// 
-			this->textBoxNameOfWorker->Location = System::Drawing::Point(107, 182);
+			this->textBoxNameOfWorker->Location = System::Drawing::Point(106, 202);
 			this->textBoxNameOfWorker->Name = L"textBoxNameOfWorker";
 			this->textBoxNameOfWorker->Size = System::Drawing::Size(100, 22);
 			this->textBoxNameOfWorker->TabIndex = 5;
 			// 
 			// textBoxHourRate
 			// 
-			this->textBoxHourRate->Location = System::Drawing::Point(267, 182);
+			this->textBoxHourRate->Location = System::Drawing::Point(266, 202);
 			this->textBoxHourRate->Name = L"textBoxHourRate";
 			this->textBoxHourRate->Size = System::Drawing::Size(100, 22);
 			this->textBoxHourRate->TabIndex = 6;
@@ -162,7 +162,7 @@ namespace ooplab7prog {
 			// labelHoursRate
 			// 
 			this->labelHoursRate->AutoSize = true;
-			this->labelHoursRate->Location = System::Drawing::Point(279, 152);
+			this->labelHoursRate->Location = System::Drawing::Point(278, 172);
 			this->labelHoursRate->Name = L"labelHoursRate";
 			this->labelHoursRate->Size = System::Drawing::Size(69, 16);
 			this->labelHoursRate->TabIndex = 10;
@@ -278,7 +278,7 @@ private: System::Void buttonGetResult_Click(System::Object^ sender, System::Even
 		num_of_item = Convert::ToInt32(textBoxGetNumberOfItem->Text);
 		CManagerEmployee manager(name, h_rate, num_of_item);
 		salary = manager.CalculateSalaryForHours(h_rate);
-		MessageBox::Show("You selected Manager!\nYou have " + num_of_item + " employeers;\nYour salary is: " + salary + "$", "Success", MessageBoxButtons::OK, MessageBoxIcon::Asterisk);
+		MessageBox::Show("You selected Manager!\nYour name is " + textBoxNameOfWorker->Text + "\nYou have " + num_of_item + " employeers; \nYour salary is : " + salary + "$", "Success", MessageBoxButtons::OK, MessageBoxIcon::Asterisk);
 		}
 		else {
 			MessageBox::Show("You didnt enter a number of workers!", "Warning", MessageBoxButtons::OK, MessageBoxIcon::Warning);
@@ -290,7 +290,7 @@ private: System::Void buttonGetResult_Click(System::Object^ sender, System::Even
 			num_of_item = Convert::ToInt32(textBoxGetNumberOfItem->Text);
 			CSalesmanEmployee saleman(name, h_rate, num_of_item);
 			salary = saleman.CalculateSalaryForHours(h_rate);
-			MessageBox::Show("You selected Saleman!\nYou saled " + num_of_item + " products;\nYour salary is: " + salary + "$", "Success", MessageBoxButtons::OK, MessageBoxIcon::Asterisk);
+			MessageBox::Show("You selected Saleman!\nYour name is " + textBoxNameOfWorker->Text + "\nYou saled " + num_of_item + " products; \nYour salary is : " + salary + "$", "Success", MessageBoxButtons::OK, MessageBoxIcon::Asterisk);
 		}
 		else {
 			MessageBox::Show("You didnt enter a number of saled items!", "Warning", MessageBoxButtons::OK, MessageBoxIcon::Warning);
@@ -303,7 +303,7 @@ private: System::Void buttonGetResult_Click(System::Object^ sender, System::Even
 			num_of_item = Convert::ToInt32(textBoxGetNumberOfItem->Text);
 			CSalesmanEmployee saleman(name, h_rate, num_of_item);
 			salary = saleman.CalculateSalaryForHours(h_rate);
-			MessageBox::Show("You selected Engineer!\nYou created " + num_of_item + " details;\nYour salary is: " + salary +"$", "Success", MessageBoxButtons::OK, MessageBoxIcon::Asterisk);
+			MessageBox::Show("You selected Engineer!\nYour name is " + textBoxNameOfWorker->Text + "\nYou created " + num_of_item + " details;\nYour salary is: " + salary +"$", "Success", MessageBoxButtons::OK, MessageBoxIcon::Asterisk);
 		}
 		else {
 			MessageBox::Show("You didnt enter a number of created details!", "Warning", MessageBoxButtons::OK, MessageBoxIcon::Warning);

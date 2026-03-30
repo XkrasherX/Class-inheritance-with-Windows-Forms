@@ -11,4 +11,3 @@ public:
 	void PrintName() const;
 	double CalculateSalaryForHours(double dWorkedHours) const;
 };
-

@@ -27,7 +27,7 @@
     <ClCompile Include="CSalemanEmployee.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="CIngineerEmployee.cpp">
+    <ClCompile Include="CEngineerEmployee.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -44,7 +44,7 @@
     <ClInclude Include="CSalemanEmployee.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="CIngineerEmployee.h">
+    <ClInclude Include="CEngineerEmployee.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

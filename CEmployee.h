@@ -1,7 +1,6 @@
 #pragma once
 #include <string>
 
-
 class CEmployee {
 protected:
 	std::string name;
@@ -12,5 +11,3 @@ public:
 	void PrintName() const;
 	double CalculateSalaryForHours( double dWorkedHours) const;
 };
-
-

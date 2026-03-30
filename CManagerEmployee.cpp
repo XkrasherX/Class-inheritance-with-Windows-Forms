@@ -27,5 +27,3 @@ double CManagerEmployee::CalculateSalaryForHours(double dWorkedHours) const
 	double bonusByWorker = numOfWorkers * 13.0;
 	return baseSalary + bonusByWorker;
 }
-
-

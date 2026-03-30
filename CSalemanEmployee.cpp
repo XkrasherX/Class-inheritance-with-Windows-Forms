@@ -25,4 +25,3 @@ double CSalesmanEmployee::CalculateSalaryForHours(double dWorkedHours) const
 	double bonusByWorker = numOfSaledItem * 8.0;
 	return baseSalary + bonusByWorker;
 }
-
