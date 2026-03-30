@@ -41,7 +41,7 @@ Once the type is selected, provide the necessary information. The interface allo
 </p>
 
 **What to do:**
-* Fill in the text fields with the employee's name, hours rate and hours you want to work and press button to see the results.
+* Fill in the text fields with the employee's name, hours rate you want to work and press button to see the results.
 
 ---
 
