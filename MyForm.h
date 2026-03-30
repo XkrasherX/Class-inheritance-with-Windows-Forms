@@ -57,13 +57,13 @@ namespace ooplab7prog {
 	private: System::Windows::Forms::TextBox^ textBoxHourRate;
 
 
-	private: System::Windows::Forms::TextBox^ textBoxHours;
+
 	private: System::Windows::Forms::TextBox^ textBoxGetNumberOfItem;
 
 
 
 	private: System::Windows::Forms::Label^ labelHoursRate;
-	private: System::Windows::Forms::Label^ labelHours;
+
 	private: System::Windows::Forms::Label^ labelSelectEmployee;
 	private: System::Windows::Forms::Label^ labelGetNumberOfItem;
 	private: System::Windows::Forms::SaveFileDialog^ saveFileTxt;
@@ -79,7 +79,6 @@ namespace ooplab7prog {
 	private:
 		double salary = 0.0;
 		double h_rate = 0.0;
-		double hours = 0.0;
 		int num_of_item = 0;
 		int choise = 0;
 
@@ -97,10 +96,8 @@ namespace ooplab7prog {
 			this->comboBoxSelectEmployee = (gcnew System::Windows::Forms::ComboBox());
 			this->textBoxNameOfWorker = (gcnew System::Windows::Forms::TextBox());
 			this->textBoxHourRate = (gcnew System::Windows::Forms::TextBox());
-			this->textBoxHours = (gcnew System::Windows::Forms::TextBox());
 			this->textBoxGetNumberOfItem = (gcnew System::Windows::Forms::TextBox());
 			this->labelHoursRate = (gcnew System::Windows::Forms::Label());
-			this->labelHours = (gcnew System::Windows::Forms::Label());
 			this->labelSelectEmployee = (gcnew System::Windows::Forms::Label());
 			this->labelGetNumberOfItem = (gcnew System::Windows::Forms::Label());
 			this->saveFileTxt = (gcnew System::Windows::Forms::SaveFileDialog());
@@ -124,7 +121,7 @@ namespace ooplab7prog {
 			// labelNameOfWorker
 			// 
 			this->labelNameOfWorker->AutoSize = true;
-			this->labelNameOfWorker->Location = System::Drawing::Point(58, 157);
+			this->labelNameOfWorker->Location = System::Drawing::Point(135, 152);
 			this->labelNameOfWorker->Name = L"labelNameOfWorker";
 			this->labelNameOfWorker->Size = System::Drawing::Size(44, 16);
 			this->labelNameOfWorker->TabIndex = 1;
@@ -143,24 +140,17 @@ namespace ooplab7prog {
 			// 
 			// textBoxNameOfWorker
 			// 
-			this->textBoxNameOfWorker->Location = System::Drawing::Point(30, 187);
+			this->textBoxNameOfWorker->Location = System::Drawing::Point(107, 182);
 			this->textBoxNameOfWorker->Name = L"textBoxNameOfWorker";
 			this->textBoxNameOfWorker->Size = System::Drawing::Size(100, 22);
 			this->textBoxNameOfWorker->TabIndex = 5;
 			// 
 			// textBoxHourRate
 			// 
-			this->textBoxHourRate->Location = System::Drawing::Point(190, 187);
+			this->textBoxHourRate->Location = System::Drawing::Point(267, 182);
 			this->textBoxHourRate->Name = L"textBoxHourRate";
 			this->textBoxHourRate->Size = System::Drawing::Size(100, 22);
 			this->textBoxHourRate->TabIndex = 6;
-			// 
-			// textBoxHours
-			// 
-			this->textBoxHours->Location = System::Drawing::Point(359, 187);
-			this->textBoxHours->Name = L"textBoxHours";
-			this->textBoxHours->Size = System::Drawing::Size(100, 22);
-			this->textBoxHours->TabIndex = 7;
 			// 
 			// textBoxGetNumberOfItem
 			// 
@@ -172,20 +162,11 @@ namespace ooplab7prog {
 			// labelHoursRate
 			// 
 			this->labelHoursRate->AutoSize = true;
-			this->labelHoursRate->Location = System::Drawing::Point(202, 157);
+			this->labelHoursRate->Location = System::Drawing::Point(279, 152);
 			this->labelHoursRate->Name = L"labelHoursRate";
 			this->labelHoursRate->Size = System::Drawing::Size(69, 16);
 			this->labelHoursRate->TabIndex = 10;
 			this->labelHoursRate->Text = L"Hours rate";
-			// 
-			// labelHours
-			// 
-			this->labelHours->AutoSize = true;
-			this->labelHours->Location = System::Drawing::Point(385, 157);
-			this->labelHours->Name = L"labelHours";
-			this->labelHours->Size = System::Drawing::Size(43, 16);
-			this->labelHours->TabIndex = 11;
-			this->labelHours->Text = L"Hours";
 			// 
 			// labelSelectEmployee
 			// 
@@ -248,10 +229,8 @@ namespace ooplab7prog {
 			this->Controls->Add(this->comboBoxSelectEmployee);
 			this->Controls->Add(this->labelSelectEmployee);
 			this->Controls->Add(this->labelGetNumberOfItem);
-			this->Controls->Add(this->labelHours);
 			this->Controls->Add(this->labelHoursRate);
 			this->Controls->Add(this->textBoxGetNumberOfItem);
-			this->Controls->Add(this->textBoxHours);
 			this->Controls->Add(this->textBoxHourRate);
 			this->Controls->Add(this->textBoxNameOfWorker);
 			this->Controls->Add(this->labelNameOfWorker);
@@ -289,22 +268,16 @@ private: System::Void buttonGetResult_Click(System::Object^ sender, System::Even
 		MessageBox::Show("You didnt enter a hours rate!", "Warning", MessageBoxButtons::OK, MessageBoxIcon::Warning);
 	}
 
-	if (!String::IsNullOrWhiteSpace(textBoxHours->Text)) {
-		hours = Convert::ToDouble(textBoxHours->Text);
-	}
-	else {
-		MessageBox::Show("You didnt enter a hours!", "Warning", MessageBoxButtons::OK, MessageBoxIcon::Warning);
-	}
-
+	
 	choise = comboBoxSelectEmployee->SelectedIndex;
 	
 
 	if (choise == 0) {
 
 		if (!String::IsNullOrWhiteSpace(textBoxGetNumberOfItem->Text)) {
-			num_of_item = Convert::ToInt32(textBoxGetNumberOfItem->Text);
+		num_of_item = Convert::ToInt32(textBoxGetNumberOfItem->Text);
 		CManagerEmployee manager(name, h_rate, num_of_item);
-		salary = manager.CalculateSalaryForHours(hours);
+		salary = manager.CalculateSalaryForHours(h_rate);
 		MessageBox::Show("You selected Manager!\nYou have " + num_of_item + " employeers;\nYour salary is: " + salary + "$", "Success", MessageBoxButtons::OK, MessageBoxIcon::Asterisk);
 		}
 		else {
@@ -316,7 +289,7 @@ private: System::Void buttonGetResult_Click(System::Object^ sender, System::Even
 		if (!String::IsNullOrWhiteSpace(textBoxGetNumberOfItem->Text)) {
 			num_of_item = Convert::ToInt32(textBoxGetNumberOfItem->Text);
 			CSalesmanEmployee saleman(name, h_rate, num_of_item);
-			salary = saleman.CalculateSalaryForHours(hours);
+			salary = saleman.CalculateSalaryForHours(h_rate);
 			MessageBox::Show("You selected Saleman!\nYou saled " + num_of_item + " products;\nYour salary is: " + salary + "$", "Success", MessageBoxButtons::OK, MessageBoxIcon::Asterisk);
 		}
 		else {
@@ -329,7 +302,7 @@ private: System::Void buttonGetResult_Click(System::Object^ sender, System::Even
 		if (!String::IsNullOrWhiteSpace(textBoxGetNumberOfItem->Text)) {
 			num_of_item = Convert::ToInt32(textBoxGetNumberOfItem->Text);
 			CSalesmanEmployee saleman(name, h_rate, num_of_item);
-			salary = saleman.CalculateSalaryForHours(hours);
+			salary = saleman.CalculateSalaryForHours(h_rate);
 			MessageBox::Show("You selected Engineer!\nYou created " + num_of_item + " details;\nYour salary is: " + salary +"$", "Success", MessageBoxButtons::OK, MessageBoxIcon::Asterisk);
 		}
 		else {
@@ -376,5 +349,6 @@ private: System::Void saveToolStripMenuItem_Click(System::Object^ sender, System
 		MessageBox::Show("Your file saved successfully!", "Success", MessageBoxButtons::OK, MessageBoxIcon::Asterisk);
 	}
 }
+private: System::Void textBoxHours_TextChanged(System::Object^ sender, System::EventArgs^ e) {}
 };
 }

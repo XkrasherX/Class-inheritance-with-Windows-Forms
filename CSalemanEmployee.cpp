@@ -21,7 +21,7 @@ void CSalesmanEmployee::PrintName() const
 
 double CSalesmanEmployee::CalculateSalaryForHours(double dWorkedHours) const
 {
-	double baseSalary = dWorkedHours * hour_rate;
+	double baseSalary = dWorkedHours * 24.0;
 	double bonusByWorker = numOfSaledItem * 8.0;
 	return baseSalary + bonusByWorker;
 }

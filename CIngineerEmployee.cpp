@@ -22,7 +22,7 @@ void CEngineerEmployee::PrintName() const
 
 double CEngineerEmployee::CalculateSalaryForHours(double dWorkedHours) const
 {
-	double baseSalary = dWorkedHours * hour_rate;
+	double baseSalary = dWorkedHours * 42.0;
 	double bonusByWorker = numOfFixedDetails * 15.0;
 	return baseSalary + bonusByWorker;
 }

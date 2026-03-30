@@ -23,7 +23,7 @@ void CManagerEmployee::PrintName() const
 
 double CManagerEmployee::CalculateSalaryForHours(double dWorkedHours) const
 {
-	double baseSalary = dWorkedHours * hour_rate;
+	double baseSalary = dWorkedHours * 31.0;
 	double bonusByWorker = numOfWorkers * 13.0;
 	return baseSalary + bonusByWorker;
 }
