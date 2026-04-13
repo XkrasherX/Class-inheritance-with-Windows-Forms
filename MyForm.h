@@ -493,3 +493,12 @@ private: System::Void exitToolStripMenuItem_Click(System::Object^ sender, System
 private: System::Void textBoxHours_TextChanged(System::Object^ sender, System::EventArgs^ e) {}
 };
 }
+
+
+/*
+TODO:
+	output Calculate sallary for employee that depends on h_rate individually.
+	dynamically saved data about h_rate. ^^^
+	uml diagram
+
+*/
