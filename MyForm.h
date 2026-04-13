@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #include "CEmployee.h"
 #include "CManagerEmployee.h"
@@ -178,9 +178,9 @@ namespace ooplab7prog {
 			this->labelHoursRate->AutoSize = true;
 			this->labelHoursRate->Location = System::Drawing::Point(60, 173);
 		 this->labelHoursRate->Name = L"labelHoursRate";
-			this->labelHoursRate->Size = System::Drawing::Size(69, 16);
-			this->labelHoursRate->TabIndex = 10;
-			this->labelHoursRate->Text = L"Hours rate";
+		 this->labelHoursRate->Size = System::Drawing::Size(69, 16);
+		 this->labelHoursRate->TabIndex = 10;
+		 this->labelHoursRate->Text = L"Hours rate";
 			// 
 			// labelSelectEmployee
 			// 
@@ -188,16 +188,16 @@ namespace ooplab7prog {
 			this->labelSelectEmployee->Location = System::Drawing::Point(60, 39);
 			this->labelSelectEmployee->Name = L"labelSelectEmployee";
 			this->labelSelectEmployee->Size = System::Drawing::Size(110, 16);
-			this->labelSelectEmployee->TabIndex = 12;
-			this->labelSelectEmployee->Text = L"Select Employee";
+		 this->labelSelectEmployee->TabIndex = 12;
+		 this->labelSelectEmployee->Text = L"Select Employee";
 			// 
 			// labelGetNumberOfItem
 			// 
 			this->labelGetNumberOfItem->AutoSize = true;
 			this->labelGetNumberOfItem->Location = System::Drawing::Point(60, 231);
-			this->labelGetNumberOfItem->Name = L"labelGetNumberOfItem";
-			this->labelGetNumberOfItem->Size = System::Drawing::Size(0, 16);
-			this->labelGetNumberOfItem->TabIndex = 13;
+		 this->labelGetNumberOfItem->Name = L"labelGetNumberOfItem";
+		 this->labelGetNumberOfItem->Size = System::Drawing::Size(0, 16);
+		 this->labelGetNumberOfItem->TabIndex = 13;
 			// 
 			// menuStrip
 			// 
@@ -206,8 +206,8 @@ namespace ooplab7prog {
 			this->menuStrip->Location = System::Drawing::Point(0, 0);
 			this->menuStrip->Name = L"menuStrip";
 			this->menuStrip->Size = System::Drawing::Size(660, 28);
-			this->menuStrip->TabIndex = 14;
-			this->menuStrip->Text = L"menuStrip1";
+		 this->menuStrip->TabIndex = 14;
+		 this->menuStrip->Text = L"menuStrip1";
 			// 
 			// fileToolStripMenuItem
 			// 
@@ -278,147 +278,176 @@ private: System::Void buttonGetResult_Click(System::Object^ sender, System::Even
 	string name;
 	lastResultText = "";
 
-	if (!String::IsNullOrWhiteSpace(textBoxNameOfWorker->Text)) {
-		name = msclr::interop::marshal_as<std::string>(textBoxNameOfWorker->Text);
-	}
-	else {
+	if (String::IsNullOrWhiteSpace(textBoxNameOfWorker->Text)) {
 		richTextBoxResults->Text = "Error: You didn't enter a name!";
 		MessageBox::Show("You didn't enter a name!", "Warning", MessageBoxButtons::OK, MessageBoxIcon::Warning);
 		return;
 	}
+	name = msclr::interop::marshal_as<std::string>(textBoxNameOfWorker->Text);
 
-	if (!String::IsNullOrWhiteSpace(textBoxHourRate->Text)) {
-		h_rate = Convert::ToDouble(textBoxHourRate->Text);
+	if (String::IsNullOrWhiteSpace(textBoxHourRate->Text)) {
+		richTextBoxResults->Text = "Error: You didn't enter an hours rate!";
+		MessageBox::Show("You didn't enter a hours rate!", "Warning", MessageBoxButtons::OK, MessageBoxIcon::Warning);
+		return;
 	}
-	else {
-		MessageBox::Show("You didnt enter a hours rate!", "Warning", MessageBoxButtons::OK, MessageBoxIcon::Warning);
+	
+	String^ hourRateText = textBoxHourRate->Text;
+	for (int i = 0; i < hourRateText->Length; i++) {
+		if (!Char::IsDigit(hourRateText[i]) && hourRateText[i] != '.' && hourRateText[i] != ',') {
+			richTextBoxResults->Text = "Error: Invalid hour rate format! Use only numbers and dot.";
+			MessageBox::Show("Invalid hour rate format!", "Warning", MessageBoxButtons::OK, MessageBoxIcon::Warning);
+			return;
+		}
 	}
+	h_rate = Convert::ToDouble(textBoxHourRate->Text);
 
 	choise = comboBoxSelectEmployee->SelectedIndex;
-
-	lastResultText = "Employee Calculate Results\n\n";
-	lastResultText += "Employee Type: ";
-
-	if (choise == 0) {
-		if (!String::IsNullOrWhiteSpace(textBoxGetNumberOfItem->Text)) {
-			if (!int::TryParse(textBoxGetNumberOfItem->Text, num_of_item)) {
-				richTextBoxResults->Text = "Error: Invalid number of workers!";
-				MessageBox::Show("Invalid input!", "Warning", MessageBoxButtons::OK, MessageBoxIcon::Warning);
-				return;
-			}
-
-			CManagerEmployee manager(name, h_rate, num_of_item);
-			salary = manager.CalculateSalaryForHours(h_rate);
-			int productivityScore = manager.GetProductivityScore();
-
-			lastResultText += "Manager\n";
-			lastResultText += "\n";
-			lastResultText += "Name: " + textBoxNameOfWorker->Text + "\n";
-			lastResultText += "Base Hour Rate: $" + h_rate.ToString() + "/hour\n";
-			lastResultText += "Number of Workers: " + num_of_item + "\n";
-			lastResultText += "\n";
-			lastResultText += "Productivity:\n";
-			lastResultText += "Productivity Score: " + productivityScore + "/100\n";
-			lastResultText += "Performance Level: ";
-			
-			if (productivityScore >= 80) lastResultText += "Excellent\n";
-			else if (productivityScore >= 60) lastResultText += "good\n";
-			else if (productivityScore >= 40) lastResultText += "not bad\n";
-			else lastResultText += "bad\n";
-			
-			lastResultText += "\n";
-			lastResultText += "Calculated Salary: $" + salary.ToString() + "\n";
-			lastResultText += "\n";
-			lastResultText += "Total Employees in System: " + (++employeeCount) + "\n";
-
-			richTextBoxResults->Text = lastResultText;
-		}
-		else {
-			richTextBoxResults->Text = "Error: You didn't enter a number of workers!";
-			MessageBox::Show("You didn't enter a number of workers!", "Warning", MessageBoxButtons::OK, MessageBoxIcon::Warning);
-		}
-	}
-	else if (choise == 1) {
-		if (!String::IsNullOrWhiteSpace(textBoxGetNumberOfItem->Text)) {
-			if (!int::TryParse(textBoxGetNumberOfItem->Text, num_of_item)) {
-				richTextBoxResults->Text = "Error: Invalid number of products!";
-				MessageBox::Show("Invalid input!", "Warning", MessageBoxButtons::OK, MessageBoxIcon::Warning);
-				return;
-			}
-
-			CSalesmanEmployee salesman(name, h_rate, num_of_item);
-			salary = salesman.CalculateSalaryForHours(h_rate);
-			int productivityScore = salesman.GetProductivityScore();
-
-			lastResultText += "Salesman\n";
-			lastResultText += "\n";
-			lastResultText += "Name: " + textBoxNameOfWorker->Text + "\n";
-			lastResultText += "Base Hour Rate: $" + h_rate.ToString() + "/hour\n";
-			lastResultText += "Number of Products: " + num_of_item + "\n";
-			lastResultText += "\n";
-			lastResultText += "Productivity:\n";
-			lastResultText += "Productivity Score: " + productivityScore + "/100\n";
-			lastResultText += "Performance Level: ";
-			
-			if (productivityScore >= 80) lastResultText += "excellent\n";
-			else if (productivityScore >= 60) lastResultText += "good\n";
-			else if (productivityScore >= 40) lastResultText += "not bad\n";
-			else lastResultText += "bad\n";
-			
-			lastResultText += "\n";
-			lastResultText += "Calculated Salary: $" + salary.ToString() + "\n";
-			lastResultText += "\n";
-			lastResultText += "Total Employees in System: " + (++employeeCount) + "\n";
-
-			richTextBoxResults->Text = lastResultText;
-		}
-		else {
-			richTextBoxResults->Text = "Error: You didn't enter a number of sold items!";
-			MessageBox::Show("You didn't enter a number of sold items!", "Warning", MessageBoxButtons::OK, MessageBoxIcon::Warning);
-		}
-	}
-	else if (choise == 2) {
-		if (!String::IsNullOrWhiteSpace(textBoxGetNumberOfItem->Text)) {
-			if (!int::TryParse(textBoxGetNumberOfItem->Text, num_of_item)) {
-				richTextBoxResults->Text = "Error: Invalid number of details!";
-				MessageBox::Show("Invalid input!", "Warning", MessageBoxButtons::OK, MessageBoxIcon::Warning);
-				return;
-			}
-
-			CEngineerEmployee engineer(name, h_rate, num_of_item);
-			salary = engineer.CalculateSalaryForHours(h_rate);
-			int productivityScore = engineer.GetProductivityScore();
-
-			lastResultText += "Enginner\n";
-			lastResultText += "\n";
-			lastResultText += "Name: " + textBoxNameOfWorker->Text + "\n";
-			lastResultText += "Base Hour Rate: $" + h_rate.ToString() + "/hour\n";
-			lastResultText += "Number of Details: " + num_of_item + "\n";
-			lastResultText += "\n";
-			lastResultText += "Productivity:\n";
-			lastResultText += "Productivity Score: " + productivityScore + "/100\n";
-			lastResultText += "Performance Level: ";
-			
-			if (productivityScore >= 80) lastResultText += "excellent\n";
-			else if (productivityScore >= 60) lastResultText += "good\n";
-			else if (productivityScore >= 40) lastResultText += "not bad\n";
-			else lastResultText += "bad\n";
-			
-			lastResultText += "\n";
-			lastResultText += "Calculated Salary: $" + salary.ToString() + "\n";
-			lastResultText += "\n";
-			lastResultText += "Total Employees in System: " + (++employeeCount) + "\n";
-
-			richTextBoxResults->Text = lastResultText;
-		}
-		else {
-			richTextBoxResults->Text = "Error: You didn't enter a number of created details!";
-			MessageBox::Show("You didn't enter a number of created details!", "Warning", MessageBoxButtons::OK, MessageBoxIcon::Warning);
-		}
-	}
-	else {
+	if (choise < 0 || choise > 2) {
 		richTextBoxResults->Text = "Error: Please select an employee type!";
 		MessageBox::Show("Please select an employee type!", "Warning", MessageBoxButtons::OK, MessageBoxIcon::Warning);
+		return;
+	}
+
+	if (String::IsNullOrWhiteSpace(textBoxGetNumberOfItem->Text)) {
+		richTextBoxResults->Text = "Error: You didn't enter required data!";
+		MessageBox::Show("Please enter all required fields!", "Warning", MessageBoxButtons::OK, MessageBoxIcon::Warning);
+		return;
+	}
+
+	String^ itemText = textBoxGetNumberOfItem->Text;
+	for (int i = 0; i < itemText->Length; i++) {
+		if (!Char::IsDigit(itemText[i])) {
+			richTextBoxResults->Text = "Error: Invalid number format! Use only digits.";
+			MessageBox::Show("Invalid input!", "Warning", MessageBoxButtons::OK, MessageBoxIcon::Warning);
+			return;
+		}
+	}
+	num_of_item = Convert::ToInt32(textBoxGetNumberOfItem->Text);
+	
+	if (choise == 0) {
+		// Manager Employee
+		employee[employeeCount] = new CManagerEmployee(name, h_rate, num_of_item);
+		
+		lastResultText = "✓ Employee Added Successfully!\n\n";
+		lastResultText += "Employee Type: Manager\n";
+		lastResultText += "Name: " + textBoxNameOfWorker->Text + "\n";
+		lastResultText += "Hour Rate: $" + h_rate.ToString() + "/hour\n";
+		lastResultText += "Number of Workers: " + num_of_item + "\n\n";
+		
+		lastResultText += "PrintEmployeeInfo() was called\n";
+		PrintEmployeeInfo(employee[employeeCount]);  
+		
+		employeeCount++;
+		
+		lastResultText += "Total Employees in System: " + employeeCount + "\n";
+		richTextBoxResults->Text = lastResultText;
+	}
+	else if (choise == 1) {
+		// Salesman Employee
+		employee[employeeCount] = new CSalesmanEmployee(name, h_rate, num_of_item);
+		
+		lastResultText = "Employee Added Successfully!\n\n";
+		lastResultText += "Employee Type: Salesman\n";
+		lastResultText += "Name: " + textBoxNameOfWorker->Text + "\n";
+		lastResultText += "Hour Rate: $" + h_rate.ToString() + "/hour\n";
+		lastResultText += "Number of Products Sold: " + num_of_item + "\n\n";
+		
+		lastResultText += "PrintEmployeeInfo() was called\n";
+		PrintEmployeeInfo(employee[employeeCount]);
+		
+		employeeCount++;
+		
+		lastResultText += "Total Employees in System: " + employeeCount + "\n";
+		richTextBoxResults->Text = lastResultText;
+	}
+	else if (choise == 2) {
+		// Engineer Employee
+		employee[employeeCount] = new CEngineerEmployee(name, h_rate, num_of_item);
+		
+		lastResultText = "✓ Employee Added Successfully!\n\n";
+		lastResultText += "Employee Type: Engineer\n";
+		lastResultText += "Name: " + textBoxNameOfWorker->Text + "\n";
+		lastResultText += "Hour Rate: $" + h_rate.ToString() + "/hour\n";
+		lastResultText += "Number of Fixed Details: " + num_of_item + "\n\n";
+		
+		lastResultText += "PrintEmployeeInfo()\n";
+		PrintEmployeeInfo(employee[employeeCount]);
+		
+		employeeCount++;
+		
+		lastResultText += "Total Employees in System: " + employeeCount + "\n";
+		richTextBoxResults->Text = lastResultText;
+	}
+}
+
+private: System::Void saveToolStripMenuItem_Click(System::Object^ sender, System::EventArgs^ e) {
+	if (employeeCount == 0) {
+		MessageBox::Show("No employees to save! Please add employees first.", "Information", MessageBoxButtons::OK, MessageBoxIcon::Information);
+		return;
+	}
+
+	SaveFileDialog^ path = gcnew SaveFileDialog();
+	path->Filter = "Text files (*.txt)|*.txt|All files (*.*)|*.*";
+	path->DefaultExt = "txt";
+	path->FileName = "EmployeeResults";
+	
+	if (path->ShowDialog() == System::Windows::Forms::DialogResult::OK) {
+		msclr::interop::marshal_context context;
+		std::string file_path = context.marshal_as<std::string>(path->FileName);
+		ofstream out_file(file_path);
+
+		if (out_file.is_open()) {
+			out_file << "Employee Management system\n";
+			
+			out_file << "Total Employees: " << employeeCount << std::endl;
+			out_file << std::endl;
+
+			out_file << "CalculateTotalSalary():\n";
+			out_file << "Number of employee: " << employeeCount << " \n";
+			out_file << "\n";
+			
+			double totalSalary = CalculateTotalSalary(employee, employeeCount, h_rate);
+	
+			
+			out_file << "Sallary calculation:\n";
+			out_file << "Total Salary (for " << h_rate << " hours): $" << totalSalary << std::endl;
+			if (employeeCount > 0) {
+				out_file << "Average Salary per Employee: $" << (totalSalary / employeeCount) << std::endl;
+			}
+			out_file << std::endl;
+
+			out_file << "Employee details:\n";
+
+			for (int i = 0; i < employeeCount; i++) {
+				out_file << "\nEmployee #" << (i + 1) << "\n";
+				
+				if (employee[i] != nullptr) {
+
+					CManagerEmployee* manager = dynamic_cast<CManagerEmployee*>(employee[i]);
+					if (manager != nullptr) {
+						out_file << "Type: Manager\n";
+						out_file << "Salary: $" << manager->CalculateSalaryForHours(h_rate) << std::endl;
+					}
+					
+					CSalesmanEmployee* salesman = dynamic_cast<CSalesmanEmployee*>(employee[i]);
+					if (salesman != nullptr) {
+						out_file << "Type: Salesman\n";
+						out_file << "Salary: $" << salesman->CalculateSalaryForHours(h_rate) << std::endl;
+					}
+					
+					CEngineerEmployee* engineer = dynamic_cast<CEngineerEmployee*>(employee[i]);
+					if (engineer != nullptr) {
+						out_file << "Type: Engineer\n";
+						out_file << "Salary: $" << engineer->CalculateSalaryForHours(h_rate) << std::endl;
+					}
+				}
+			}
+			out_file.close();
+			MessageBox::Show("Results saved successfully to:\n" + path->FileName, "Success", MessageBoxButtons::OK, MessageBoxIcon::Asterisk);
+		}
+		else {
+			MessageBox::Show("Error opening file for writing!", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
+		}
 	}
 }
 
@@ -441,48 +470,24 @@ private: System::Void comboBoxSelectEmployee_SelectedIndexChanged(System::Object
 }
 
 private: System::Void buttonClearResults_Click(System::Object^ sender, System::EventArgs^ e) {
+	for (int i = 0; i < employeeCount; i++) {
+		if (employee[i] != nullptr) {
+			delete employee[i];
+			employee[i] = nullptr;
+		}
+	}
+	employeeCount = 0;
+
 	richTextBoxResults->Text = "Results will be displayed here...";
 	textBoxNameOfWorker->Text = "";
 	textBoxHourRate->Text = "";
 	textBoxGetNumberOfItem->Text = "";
 	comboBoxSelectEmployee->SelectedIndex = -1;
-	employeeCount = 0;
 	lastResultText = "";
 }
 
 private: System::Void exitToolStripMenuItem_Click(System::Object^ sender, System::EventArgs^ e) {
 	this->Close();
-}
-
-private: System::Void saveToolStripMenuItem_Click(System::Object^ sender, System::EventArgs^ e) {
-	if (String::IsNullOrEmpty(lastResultText)) {
-		MessageBox::Show("No results to save! Please calculate results first.", "Information", MessageBoxButtons::OK, MessageBoxIcon::Information);
-		return;
-	}
-
-	SaveFileDialog^ path = gcnew SaveFileDialog();
-	path->Filter = "Text files (*.txt)|*.txt|All files (*.*)|*.*";
-	path->DefaultExt = "txt";
-	path->FileName = "EmployeeResults";
-	
-	if (path->ShowDialog() == System::Windows::Forms::DialogResult::OK) {
-		msclr::interop::marshal_context context;
-		std::string file_path = context.marshal_as<std::string>(path->FileName);
-		ofstream out_file(file_path);
-
-		if (out_file.is_open()) {
-			out_file << "Employee system:" << std::endl;
-			out_file << context.marshal_as<std::string>(lastResultText) << std::endl;
-			out_file << "System Status: Successfully Processed" << std::endl;
-			out_file << "Total Employees Created: " << employeeCount << std::endl;
-
-			out_file.close();
-			MessageBox::Show("Results saved successfully to:\n" + path->FileName, "Success", MessageBoxButtons::OK, MessageBoxIcon::Asterisk);
-		}
-		else {
-			MessageBox::Show("Error opening file for writing!", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
-		}
-	}
 }
 
 private: System::Void textBoxHours_TextChanged(System::Object^ sender, System::EventArgs^ e) {}
