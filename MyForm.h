@@ -177,7 +177,7 @@ namespace ooplab7prog {
 			// 
 			this->labelHoursRate->AutoSize = true;
 			this->labelHoursRate->Location = System::Drawing::Point(60, 173);
-			this->labelHoursRate->Name = L"labelHoursRate";
+		 this->labelHoursRate->Name = L"labelHoursRate";
 			this->labelHoursRate->Size = System::Drawing::Size(69, 16);
 			this->labelHoursRate->TabIndex = 10;
 			this->labelHoursRate->Text = L"Hours rate";
@@ -278,7 +278,6 @@ private: System::Void buttonGetResult_Click(System::Object^ sender, System::Even
 	string name;
 	lastResultText = "";
 
-
 	if (!String::IsNullOrWhiteSpace(textBoxNameOfWorker->Text)) {
 		name = msclr::interop::marshal_as<std::string>(textBoxNameOfWorker->Text);
 	}
@@ -289,10 +288,7 @@ private: System::Void buttonGetResult_Click(System::Object^ sender, System::Even
 	}
 
 	if (!String::IsNullOrWhiteSpace(textBoxHourRate->Text)) {
-		try {
-			h_rate = Convert::ToDouble(textBoxHourRate->Text);
-		}
-		catch (System::FormatException^) {
+		if (!double::TryParse(textBoxHourRate->Text, h_rate)) {
 			richTextBoxResults->Text = "Error: Invalid hour rate format!";
 			MessageBox::Show("Invalid hour rate format!", "Warning", MessageBoxButtons::OK, MessageBoxIcon::Warning);
 			return;
@@ -306,45 +302,42 @@ private: System::Void buttonGetResult_Click(System::Object^ sender, System::Even
 
 	choise = comboBoxSelectEmployee->SelectedIndex;
 
-
 	lastResultText = "Employee Calculate Results\n\n";
 	lastResultText += "Employee Type: ";
 
 	if (choise == 0) {
-
 		if (!String::IsNullOrWhiteSpace(textBoxGetNumberOfItem->Text)) {
-			try {
-				num_of_item = Convert::ToInt32(textBoxGetNumberOfItem->Text);
-				CManagerEmployee manager(name, h_rate, num_of_item);
-				salary = manager.CalculateSalaryForHours(h_rate);
-				int productivityScore = manager.GetProductivityScore();
-
-				lastResultText += "Manager\n";
-				lastResultText += "\n";
-				lastResultText += "Name: " + textBoxNameOfWorker->Text + "\n";
-				lastResultText += "Base Hour Rate: $" + h_rate.ToString() + "/hour\n";
-				lastResultText += "Number of Workers: " + num_of_item + "\n";
-				lastResultText += "\n";
-				lastResultText += "Productivity:\n";
-				lastResultText += "Productivity Score: " + productivityScore + "/100\n";
-				lastResultText += "Performance Level: ";
-				
-				if (productivityScore >= 80) lastResultText += "Excellent\n";
-				else if (productivityScore >= 60) lastResultText += "good\n";
-				else if (productivityScore >= 40) lastResultText += "not bad\n";
-				else lastResultText += "bad\n";
-				
-				lastResultText += "\n";
-				lastResultText += "Calculated Salary: $" + salary.ToString() + "\n";
-				lastResultText += "\n";
-				lastResultText += "Total Employees in System: " + (++employeeCount) + "\n";
-
-				richTextBoxResults->Text = lastResultText;
-			}
-			catch (System::FormatException^) {
+			if (!int::TryParse(textBoxGetNumberOfItem->Text, num_of_item)) {
 				richTextBoxResults->Text = "Error: Invalid number of workers!";
 				MessageBox::Show("Invalid input!", "Warning", MessageBoxButtons::OK, MessageBoxIcon::Warning);
+				return;
 			}
+
+			CManagerEmployee manager(name, h_rate, num_of_item);
+			salary = manager.CalculateSalaryForHours(h_rate);
+			int productivityScore = manager.GetProductivityScore();
+
+			lastResultText += "Manager\n";
+			lastResultText += "\n";
+			lastResultText += "Name: " + textBoxNameOfWorker->Text + "\n";
+			lastResultText += "Base Hour Rate: $" + h_rate.ToString() + "/hour\n";
+			lastResultText += "Number of Workers: " + num_of_item + "\n";
+			lastResultText += "\n";
+			lastResultText += "Productivity:\n";
+			lastResultText += "Productivity Score: " + productivityScore + "/100\n";
+			lastResultText += "Performance Level: ";
+			
+			if (productivityScore >= 80) lastResultText += "Excellent\n";
+			else if (productivityScore >= 60) lastResultText += "good\n";
+			else if (productivityScore >= 40) lastResultText += "not bad\n";
+			else lastResultText += "bad\n";
+			
+			lastResultText += "\n";
+			lastResultText += "Calculated Salary: $" + salary.ToString() + "\n";
+			lastResultText += "\n";
+			lastResultText += "Total Employees in System: " + (++employeeCount) + "\n";
+
+			richTextBoxResults->Text = lastResultText;
 		}
 		else {
 			richTextBoxResults->Text = "Error: You didn't enter a number of workers!";
@@ -353,38 +346,37 @@ private: System::Void buttonGetResult_Click(System::Object^ sender, System::Even
 	}
 	else if (choise == 1) {
 		if (!String::IsNullOrWhiteSpace(textBoxGetNumberOfItem->Text)) {
-			try {
-				num_of_item = Convert::ToInt32(textBoxGetNumberOfItem->Text);
-				CSalesmanEmployee salesman(name, h_rate, num_of_item);
-				salary = salesman.CalculateSalaryForHours(h_rate);
-				int productivityScore = salesman.GetProductivityScore();
-
-				lastResultText += "Salesman\n";
-				lastResultText += "\n";
-				lastResultText += "Name: " + textBoxNameOfWorker->Text + "\n";
-				lastResultText += "Base Hour Rate: $" + h_rate.ToString() + "/hour\n";
-				lastResultText += "Number of Products: " + num_of_item + "\n";
-				lastResultText += "\n";
-				lastResultText += "Productivity:\n";
-				lastResultText += "Productivity Score: " + productivityScore + "/100\n";
-				lastResultText += "Performance Level: ";
-				
-				if (productivityScore >= 80) lastResultText += "excellent\n";
-				else if (productivityScore >= 60) lastResultText += "good\n";
-				else if (productivityScore >= 40) lastResultText += "not bad\n";
-				else lastResultText += "bad\n";
-				
-				lastResultText += "\n";
-				lastResultText += "Calculated Salary: $" + salary.ToString() + "\n";
-				lastResultText += "\n";
-				lastResultText += "Total Employees in System: " + (++employeeCount) + "\n";
-
-				richTextBoxResults->Text = lastResultText;
-			}
-			catch (System::FormatException^) {
+			if (!int::TryParse(textBoxGetNumberOfItem->Text, num_of_item)) {
 				richTextBoxResults->Text = "Error: Invalid number of products!";
 				MessageBox::Show("Invalid input!", "Warning", MessageBoxButtons::OK, MessageBoxIcon::Warning);
+				return;
 			}
+
+			CSalesmanEmployee salesman(name, h_rate, num_of_item);
+			salary = salesman.CalculateSalaryForHours(h_rate);
+			int productivityScore = salesman.GetProductivityScore();
+
+			lastResultText += "Salesman\n";
+			lastResultText += "\n";
+			lastResultText += "Name: " + textBoxNameOfWorker->Text + "\n";
+			lastResultText += "Base Hour Rate: $" + h_rate.ToString() + "/hour\n";
+			lastResultText += "Number of Products: " + num_of_item + "\n";
+			lastResultText += "\n";
+			lastResultText += "Productivity:\n";
+			lastResultText += "Productivity Score: " + productivityScore + "/100\n";
+			lastResultText += "Performance Level: ";
+			
+			if (productivityScore >= 80) lastResultText += "excellent\n";
+			else if (productivityScore >= 60) lastResultText += "good\n";
+			else if (productivityScore >= 40) lastResultText += "not bad\n";
+			else lastResultText += "bad\n";
+			
+			lastResultText += "\n";
+			lastResultText += "Calculated Salary: $" + salary.ToString() + "\n";
+			lastResultText += "\n";
+			lastResultText += "Total Employees in System: " + (++employeeCount) + "\n";
+
+			richTextBoxResults->Text = lastResultText;
 		}
 		else {
 			richTextBoxResults->Text = "Error: You didn't enter a number of sold items!";
@@ -393,38 +385,37 @@ private: System::Void buttonGetResult_Click(System::Object^ sender, System::Even
 	}
 	else if (choise == 2) {
 		if (!String::IsNullOrWhiteSpace(textBoxGetNumberOfItem->Text)) {
-			try {
-				num_of_item = Convert::ToInt32(textBoxGetNumberOfItem->Text);
-				CEngineerEmployee engineer(name, h_rate, num_of_item);
-				salary = engineer.CalculateSalaryForHours(h_rate);
-				int productivityScore = engineer.GetProductivityScore();
-
-				lastResultText += "Enginner\n";
-				lastResultText += "\n";
-				lastResultText += "Name: " + textBoxNameOfWorker->Text + "\n";
-				lastResultText += "Base Hour Rate: $" + h_rate.ToString() + "/hour\n";
-				lastResultText += "Number of Details: " + num_of_item + "\n";
-				lastResultText += "\n";
-				lastResultText += "Productivity:\n";
-				lastResultText += "Productivity Score: " + productivityScore + "/100\n";
-				lastResultText += "Performance Level: ";
-				
-				if (productivityScore >= 80) lastResultText += "excellent\n";
-				else if (productivityScore >= 60) lastResultText += "good\n";
-				else if (productivityScore >= 40) lastResultText += "not bad\n";
-				else lastResultText += "bad\n";
-				
-				lastResultText += "\n";
-				lastResultText += "Calculated Salary: $" + salary.ToString() + "\n";
-				lastResultText += "\n";
-				lastResultText += "Total Employees in System: " + (++employeeCount) + "\n";
-
-				richTextBoxResults->Text = lastResultText;
-			}
-			catch (System::FormatException^) {
+			if (!int::TryParse(textBoxGetNumberOfItem->Text, num_of_item)) {
 				richTextBoxResults->Text = "Error: Invalid number of details!";
 				MessageBox::Show("Invalid input!", "Warning", MessageBoxButtons::OK, MessageBoxIcon::Warning);
+				return;
 			}
+
+			CEngineerEmployee engineer(name, h_rate, num_of_item);
+			salary = engineer.CalculateSalaryForHours(h_rate);
+			int productivityScore = engineer.GetProductivityScore();
+
+			lastResultText += "Enginner\n";
+			lastResultText += "\n";
+			lastResultText += "Name: " + textBoxNameOfWorker->Text + "\n";
+			lastResultText += "Base Hour Rate: $" + h_rate.ToString() + "/hour\n";
+			lastResultText += "Number of Details: " + num_of_item + "\n";
+			lastResultText += "\n";
+			lastResultText += "Productivity:\n";
+			lastResultText += "Productivity Score: " + productivityScore + "/100\n";
+			lastResultText += "Performance Level: ";
+			
+			if (productivityScore >= 80) lastResultText += "excellent\n";
+			else if (productivityScore >= 60) lastResultText += "good\n";
+			else if (productivityScore >= 40) lastResultText += "not bad\n";
+			else lastResultText += "bad\n";
+			
+			lastResultText += "\n";
+			lastResultText += "Calculated Salary: $" + salary.ToString() + "\n";
+			lastResultText += "\n";
+			lastResultText += "Total Employees in System: " + (++employeeCount) + "\n";
+
+			richTextBoxResults->Text = lastResultText;
 		}
 		else {
 			richTextBoxResults->Text = "Error: You didn't enter a number of created details!";
@@ -481,30 +472,21 @@ private: System::Void saveToolStripMenuItem_Click(System::Object^ sender, System
 	path->FileName = "EmployeeResults";
 	
 	if (path->ShowDialog() == System::Windows::Forms::DialogResult::OK) {
-		try {
+		msclr::interop::marshal_context context;
+		std::string file_path = context.marshal_as<std::string>(path->FileName);
+		ofstream out_file(file_path);
 
-			msclr::interop::marshal_context context;
-			std::string file_path = context.marshal_as<std::string>(path->FileName);
-			ofstream out_file(file_path);
+		if (out_file.is_open()) {
+			out_file << "Employee system:" << std::endl;
+			out_file << context.marshal_as<std::string>(lastResultText) << std::endl;
+			out_file << "System Status: Successfully Processed" << std::endl;
+			out_file << "Total Employees Created: " << employeeCount << std::endl;
 
-			if (out_file.is_open()) {
-				out_file << "Employee system:" << std::endl;
-				
-				out_file << context.marshal_as<std::string>(lastResultText) << std::endl;
-				
-				out_file << "System Status: Successfully Processed" << std::endl;
-				out_file << "Total Employees Created: " << employeeCount << std::endl;
-				
-
-				out_file.close();
-				MessageBox::Show("Results saved successfully to:\n" + path->FileName, "Success", MessageBoxButtons::OK, MessageBoxIcon::Asterisk);
-			}
-			else {
-				MessageBox::Show("Error opening file for writing!", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
-			}
+			out_file.close();
+			MessageBox::Show("Results saved successfully to:\n" + path->FileName, "Success", MessageBoxButtons::OK, MessageBoxIcon::Asterisk);
 		}
-		catch (Exception^ ex) {
-			MessageBox::Show("Error saving file: " + ex->Message, "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
+		else {
+			MessageBox::Show("Error opening file for writing!", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
 		}
 	}
 }
