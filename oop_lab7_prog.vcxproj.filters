@@ -24,10 +24,16 @@
     <ClCompile Include="CManagerEmployee.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="CSalemanEmployee.cpp">
+    <ClCompile Include="CEngineerEmployee.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="CEngineerEmployee.cpp">
+    <ClCompile Include="EmployeeUtils.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CSalesmanEmployee.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="IProductivityTracker.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -41,10 +47,16 @@
     <ClInclude Include="CManagerEmployee.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="CSalemanEmployee.h">
+    <ClInclude Include="CEngineerEmployee.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="CEngineerEmployee.h">
+    <ClInclude Include="EmployeeUtils.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="IProductivityTracker.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CSalesmanEmployee.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

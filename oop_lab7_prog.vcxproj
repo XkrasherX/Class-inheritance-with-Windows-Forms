@@ -123,14 +123,18 @@
     <ClCompile Include="CEmployee.cpp" />
     <ClCompile Include="CEngineerEmployee.cpp" />
     <ClCompile Include="CManagerEmployee.cpp" />
-    <ClCompile Include="CSalemanEmployee.cpp" />
+    <ClCompile Include="CSalesmanEmployee.cpp" />
+    <ClCompile Include="EmployeeUtils.cpp" />
+    <ClCompile Include="IProductivityTracker.cpp" />
     <ClCompile Include="MyForm.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CEmployee.h" />
     <ClInclude Include="CEngineerEmployee.h" />
     <ClInclude Include="CManagerEmployee.h" />
-    <ClInclude Include="CSalemanEmployee.h" />
+    <ClInclude Include="CSalesmanEmployee.h" />
+    <ClInclude Include="EmployeeUtils.h" />
+    <ClInclude Include="IProductivityTracker.h" />
     <ClInclude Include="MyForm.h">
       <FileType>CppForm</FileType>
     </ClInclude>

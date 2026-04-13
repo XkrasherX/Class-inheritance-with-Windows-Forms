@@ -27,3 +27,18 @@ double CManagerEmployee::CalculateSalaryForHours(double dWorkedHours) const
 	double bonusByWorker = numOfWorkers * 13.0;
 	return baseSalary + bonusByWorker;
 }
+
+void CManagerEmployee::DisplayProductivity() const
+{
+	cout << "Manager Productivity Report:" << endl;
+	cout << "Name: " << name << endl;
+	cout << "Workers Managed: " << numOfWorkers << endl;
+	cout << "Productivity Score: " << GetProductivityScore() << "/100" << endl;
+}
+
+int CManagerEmployee::GetProductivityScore() const
+{
+	
+	int score = (numOfWorkers * 5);
+	return (score > 100) ? 100 : score;
+}

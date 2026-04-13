@@ -6,6 +6,7 @@ CEngineerEmployee::CEngineerEmployee()
 {
 	name = "Engineer";
 	hour_rate = 0;
+	numOfFixedDetails = 0;
 }
 
 CEngineerEmployee::CEngineerEmployee(string m_name, double m_hour_rate, int fixed_details)
@@ -22,7 +23,22 @@ void CEngineerEmployee::PrintName() const
 
 double CEngineerEmployee::CalculateSalaryForHours(double dWorkedHours) const
 {
-	double baseSalary = dWorkedHours * 42.0;
-	double bonusByWorker = numOfFixedDetails * 15.0;
-	return baseSalary + bonusByWorker;
+	double baseSalary = dWorkedHours * 20.0;
+	double bonusPerDetail = numOfFixedDetails * 50.0;
+	return baseSalary + bonusPerDetail;
+}
+
+void CEngineerEmployee::DisplayProductivity() const
+{
+	cout << "Engineer Productivity Report:" << endl;
+	cout << "Name: " << name << endl;
+	cout << "Details Created: " << numOfFixedDetails << endl;
+	cout << "Productivity Score: " << GetProductivityScore() << "/100" << endl;
+}
+
+int CEngineerEmployee::GetProductivityScore() const
+{
+	
+	int score = (numOfFixedDetails * 4);
+	return (score > 100) ? 100 : score;
 }
