@@ -288,16 +288,10 @@ private: System::Void buttonGetResult_Click(System::Object^ sender, System::Even
 	}
 
 	if (!String::IsNullOrWhiteSpace(textBoxHourRate->Text)) {
-		if (!double::TryParse(textBoxHourRate->Text, h_rate)) {
-			richTextBoxResults->Text = "Error: Invalid hour rate format!";
-			MessageBox::Show("Invalid hour rate format!", "Warning", MessageBoxButtons::OK, MessageBoxIcon::Warning);
-			return;
-		}
+		h_rate = Convert::ToDouble(textBoxHourRate->Text);
 	}
 	else {
-		richTextBoxResults->Text = "Error: You didn't enter an hours rate!";
-		MessageBox::Show("You didn't enter an hours rate!", "Warning", MessageBoxButtons::OK, MessageBoxIcon::Warning);
-		return;
+		MessageBox::Show("You didnt enter a hours rate!", "Warning", MessageBoxButtons::OK, MessageBoxIcon::Warning);
 	}
 
 	choise = comboBoxSelectEmployee->SelectedIndex;
