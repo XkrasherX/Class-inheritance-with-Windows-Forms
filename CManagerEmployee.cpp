@@ -1,24 +1,27 @@
 #include "CManagerEmployee.h"
 #include <iostream>
+#include <iomanip>
 using namespace std;
 
 CManagerEmployee::CManagerEmployee()
+	: CEmployee(), numOfWorkers(0)
 {
 	name = "Manager";
-	hour_rate = 0;
-	numOfWorkers = 0;
+	hour_rate = 0.0;
 }
 
-CManagerEmployee::CManagerEmployee(string m_name, double m_hour_rate, int m_numOfWorkers)
+CManagerEmployee::CManagerEmployee(string name, double hour_rate, int numOfWorkers)
+	: CEmployee()
 {
-	name = m_name;
-	hour_rate = m_hour_rate;
-	numOfWorkers = m_numOfWorkers;
+	this->name = name;
+	this->hour_rate = hour_rate;
+	this->numOfWorkers = numOfWorkers;
 }
+CManagerEmployee::~CManagerEmployee() {}
 
 void CManagerEmployee::PrintName() const
 {
-	cout << "Manager!" << endl;
+	cout << "Manager: " << name << endl;
 }
 
 double CManagerEmployee::CalculateSalaryForHours(double dWorkedHours) const
@@ -28,17 +31,19 @@ double CManagerEmployee::CalculateSalaryForHours(double dWorkedHours) const
 	return baseSalary + bonusByWorker;
 }
 
-void CManagerEmployee::DisplayProductivity() const
+void CManagerEmployee::DisplayInfo() const
 {
-	cout << "Manager Productivity Report:" << endl;
+	cout << "Role: Manager" << endl;
 	cout << "Name: " << name << endl;
+	cout << "Hour Rate: $" << fixed << setprecision(2) << hour_rate << "/hour" << endl;
 	cout << "Workers Managed: " << numOfWorkers << endl;
+	cout << "Salary (40 hours): $" << fixed << setprecision(2) << CalculateSalaryForHours(40) << endl;
 	cout << "Productivity Score: " << GetProductivityScore() << "/100" << endl;
+	cout << endl;
 }
 
 int CManagerEmployee::GetProductivityScore() const
 {
-	
 	int score = (numOfWorkers * 5);
 	return (score > 100) ? 100 : score;
 }

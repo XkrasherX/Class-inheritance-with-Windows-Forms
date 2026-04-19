@@ -1,14 +1,22 @@
 #pragma once
 #include <string>
 
-class CEmployee {
+class CEmployee
+{
 protected:
 	std::string name;
 	double hour_rate;
+
 public:
-	CEmployee();
-	CEmployee(std::string m_name, double m_hour_rate);
-	virtual ~CEmployee();
+	virtual ~CEmployee() = 0;
+
 	virtual void PrintName() const = 0;
+
 	virtual double CalculateSalaryForHours(double dWorkedHours) const = 0;
+
+	virtual std::string GetName() const { return name; }
+
+	virtual double GetHourRate() const { return hour_rate; }
+
+	virtual void DisplayInfo() const = 0;
 };

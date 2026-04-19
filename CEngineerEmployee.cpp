@@ -1,44 +1,50 @@
 #include "CEngineerEmployee.h"
 #include <iostream>
+#include <iomanip>
 using namespace std;
 
 CEngineerEmployee::CEngineerEmployee()
+	: CEmployee(), numOfFixedDetails(0)
 {
 	name = "Engineer";
-	hour_rate = 0;
-	numOfFixedDetails = 0;
+	hour_rate = 0.0;
 }
 
-CEngineerEmployee::CEngineerEmployee(string m_name, double m_hour_rate, int fixed_details)
+CEngineerEmployee::CEngineerEmployee(string name, double hour_rate, int fixed_details)
+	: CEmployee()
 {
-	name = m_name;
-	hour_rate = m_hour_rate;
-	numOfFixedDetails = fixed_details;
+	this->name = name;
+	this->hour_rate = hour_rate;
+	this->numOfFixedDetails = fixed_details;
 }
+
+CEngineerEmployee::~CEngineerEmployee() {}
 
 void CEngineerEmployee::PrintName() const
 {
-	cout << "Engineer!" << endl;
+	cout << "Engineer" << name << endl;
 }
 
 double CEngineerEmployee::CalculateSalaryForHours(double dWorkedHours) const
 {
-	double baseSalary = dWorkedHours * 20.0;
-	double bonusPerDetail = numOfFixedDetails * 50.0;
-	return baseSalary + bonusPerDetail;
+	double baseSalary = dWorkedHours * 35.0;
+	double detailBonus = numOfFixedDetails * 20.0;
+	return baseSalary + detailBonus;
 }
 
-void CEngineerEmployee::DisplayProductivity() const
+void CEngineerEmployee::DisplayInfo() const
 {
-	cout << "Engineer Productivity Report:" << endl;
+	cout << "Role: Engineer" << endl;
 	cout << "Name: " << name << endl;
-	cout << "Details Created: " << numOfFixedDetails << endl;
+	cout << "Hour Rate: $" << fixed << setprecision(2) << hour_rate << "/hour" << endl;
+	cout << "Fixed Details: " << numOfFixedDetails << endl;
+	cout << "Salary (40 hours): $" << fixed << setprecision(2) << CalculateSalaryForHours(40) << endl;
 	cout << "Productivity Score: " << GetProductivityScore() << "/100" << endl;
+	cout << endl;
 }
 
 int CEngineerEmployee::GetProductivityScore() const
 {
-	
 	int score = (numOfFixedDetails * 4);
 	return (score > 100) ? 100 : score;
 }

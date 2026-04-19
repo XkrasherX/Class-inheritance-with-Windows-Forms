@@ -4,11 +4,13 @@
 #include "CManagerEmployee.h"
 #include "CSalesmanEmployee.h"
 #include "CEngineerEmployee.h"
+#include "CSpecialistEmployee.h"
 #include "EmployeeUtils.h"
 
 #include <msclr/marshal_cppstd.h>
 #include <fstream>
-
+#include <sstream>
+#include <iostream>
 namespace ooplab7prog {
 
 	using namespace System;
@@ -17,32 +19,33 @@ namespace ooplab7prog {
 	using namespace System::Windows::Forms;
 	using namespace System::Data;
 	using namespace System::Drawing;
-
+	using namespace System::IO;
 	using namespace msclr::interop;
 	using namespace std;
-	/// <summary>
-	/// Summary for MyForm
-	/// </summary>
+
 	public ref class MyForm : public System::Windows::Forms::Form
 	{
 	public:
 		MyForm(void)
 		{
 			InitializeComponent();
-			//
-			//TODO: Add the constructor code here
-			//
 			employee = new CEmployee*[10];
 			for (int i = 0; i < 10; i++) employee[i] = nullptr;
 		}
 
 	protected:
-
-		~MyForm()
+		~MyForm()				
 		{
 			if (employee)
 			{
-
+				for (int i = 0; i < 10; i++)
+				{
+					if (employee[i] != nullptr)
+					{
+						delete employee[i];
+						employee[i] = nullptr;
+					}
+				}
 				delete[] employee;
 				employee = nullptr;
 			}
@@ -51,22 +54,27 @@ namespace ooplab7prog {
 				delete components;
 			}
 		}
+
 	private: System::Windows::Forms::Button^ buttonGetResult;
 	private: System::Windows::Forms::Button^ buttonClearResults;
-	protected:
+	private: System::Windows::Forms::Button^ buttonShowAll;
+	private: System::Windows::Forms::Button^ buttonCalculateTotal;
+	private: System::Windows::Forms::Button^ buttonStatistics;
 
 	private: System::Windows::Forms::Label^ labelNameOfWorker;
 	private: System::Windows::Forms::ComboBox^ comboBoxSelectEmployee;
-	protected:
-
 	private: System::Windows::Forms::TextBox^ textBoxNameOfWorker;
 	private: System::Windows::Forms::TextBox^ textBoxHourRate;
-
 	private: System::Windows::Forms::TextBox^ textBoxGetNumberOfItem;
-	private: System::Windows::Forms::Label^ labelHoursRate;
+	private: System::Windows::Forms::TextBox^ textBoxWorkedHours;
 
+	private: System::Windows::Forms::Label^ labelHoursRate;
 	private: System::Windows::Forms::Label^ labelSelectEmployee;
 	private: System::Windows::Forms::Label^ labelGetNumberOfItem;
+	private: System::Windows::Forms::Label^ labelWorkedHours;
+	private: System::Windows::Forms::Label^ labelSpecialistBonus;
+	private: System::Windows::Forms::TextBox^ textBoxSpecialistBonus;
+
 	private: System::Windows::Forms::SaveFileDialog^ saveFileTxt;
 	private: System::Windows::Forms::MenuStrip^ menuStrip;
 	private: System::Windows::Forms::RichTextBox^ richTextBoxResults;
@@ -74,12 +82,14 @@ namespace ooplab7prog {
 	private: System::Windows::Forms::ToolStripMenuItem^ fileToolStripMenuItem;
 	private: System::Windows::Forms::ToolStripMenuItem^ saveToolStripMenuItem;
 	private: System::Windows::Forms::ToolStripMenuItem^ exitToolStripMenuItem;
+	private: System::Windows::Forms::ToolStripMenuItem^ helpToolStripMenuItem;
+	private: System::Windows::Forms::ToolStripMenuItem^ aboutToolStripMenuItem;
 
 	private:
 		double salary = 0.0;
 		double h_rate = 0.0;
 		int num_of_item = 0;
-		int choise = 0;
+		int choice = 0;
 		CEmployee** employee = nullptr;
 		int employeeCount = 0;
 		String^ lastResultText = "";
@@ -87,127 +97,213 @@ namespace ooplab7prog {
 		System::ComponentModel::Container ^components;
 
 #pragma region Windows Form Designer generated code
-		/// <summary>
-		/// Required method for Designer support - do not modify
-		/// the contents of this method with the code editor.
-		/// </summary>
 		void InitializeComponent(void)
 		{
 			this->buttonGetResult = (gcnew System::Windows::Forms::Button());
 			this->buttonClearResults = (gcnew System::Windows::Forms::Button());
+			this->buttonShowAll = (gcnew System::Windows::Forms::Button());
+			this->buttonCalculateTotal = (gcnew System::Windows::Forms::Button());
+			this->buttonStatistics = (gcnew System::Windows::Forms::Button());
 			this->labelNameOfWorker = (gcnew System::Windows::Forms::Label());
 			this->comboBoxSelectEmployee = (gcnew System::Windows::Forms::ComboBox());
 			this->textBoxNameOfWorker = (gcnew System::Windows::Forms::TextBox());
 			this->textBoxHourRate = (gcnew System::Windows::Forms::TextBox());
 			this->textBoxGetNumberOfItem = (gcnew System::Windows::Forms::TextBox());
+			this->textBoxWorkedHours = (gcnew System::Windows::Forms::TextBox());
+			this->textBoxSpecialistBonus = (gcnew System::Windows::Forms::TextBox());
 			this->labelHoursRate = (gcnew System::Windows::Forms::Label());
 			this->labelSelectEmployee = (gcnew System::Windows::Forms::Label());
 			this->labelGetNumberOfItem = (gcnew System::Windows::Forms::Label());
-			this->saveFileTxt = (gcnew System::Windows::Forms::SaveFileDialog());
+			this->labelWorkedHours = (gcnew System::Windows::Forms::Label());
+			this->labelSpecialistBonus = (gcnew System::Windows::Forms::Label());
+			this->richTextBoxResults = (gcnew System::Windows::Forms::RichTextBox());
 			this->menuStrip = (gcnew System::Windows::Forms::MenuStrip());
 			this->fileToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->saveToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->exitToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
-			this->richTextBoxResults = (gcnew System::Windows::Forms::RichTextBox());
+			this->helpToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
+			this->aboutToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
+			this->saveFileTxt = (gcnew System::Windows::Forms::SaveFileDialog());
 			this->menuStrip->SuspendLayout();
 			this->SuspendLayout();
 			// 
 			// buttonGetResult
 			// 
-			this->buttonGetResult->Location = System::Drawing::Point(12, 345);
+			this->buttonGetResult->Location = System::Drawing::Point(30, 310);
 			this->buttonGetResult->Name = L"buttonGetResult";
-			this->buttonGetResult->Size = System::Drawing::Size(120, 50);
-			this->buttonGetResult->TabIndex = 0;
-			this->buttonGetResult->Text = L"Calculate Result";
+			this->buttonGetResult->Size = System::Drawing::Size(140, 35);
+			this->buttonGetResult->TabIndex = 13;
+			this->buttonGetResult->Text = L"Add Employee";
 			this->buttonGetResult->UseVisualStyleBackColor = true;
 			this->buttonGetResult->Click += gcnew System::EventHandler(this, &MyForm::buttonGetResult_Click);
 			// 
 			// buttonClearResults
 			// 
-			this->buttonClearResults->Location = System::Drawing::Point(147, 345);
+			this->buttonClearResults->Location = System::Drawing::Point(30, 390);
 			this->buttonClearResults->Name = L"buttonClearResults";
-			this->buttonClearResults->Size = System::Drawing::Size(120, 50);
-			this->buttonClearResults->TabIndex = 15;
+			this->buttonClearResults->Size = System::Drawing::Size(290, 35);
+			this->buttonClearResults->TabIndex = 17;
 			this->buttonClearResults->Text = L"Clear Results";
 			this->buttonClearResults->UseVisualStyleBackColor = true;
 			this->buttonClearResults->Click += gcnew System::EventHandler(this, &MyForm::buttonClearResults_Click);
 			// 
+			// buttonShowAll
+			// 
+			this->buttonShowAll->Location = System::Drawing::Point(180, 310);
+			this->buttonShowAll->Name = L"buttonShowAll";
+			this->buttonShowAll->Size = System::Drawing::Size(140, 35);
+			this->buttonShowAll->TabIndex = 14;
+			this->buttonShowAll->Text = L"Show All";
+			this->buttonShowAll->UseVisualStyleBackColor = true;
+			this->buttonShowAll->Click += gcnew System::EventHandler(this, &MyForm::buttonShowAll_Click);
+			// 
+			// buttonCalculateTotal
+			// 
+			this->buttonCalculateTotal->Location = System::Drawing::Point(30, 350);
+			this->buttonCalculateTotal->Name = L"buttonCalculateTotal";
+			this->buttonCalculateTotal->Size = System::Drawing::Size(140, 35);
+			this->buttonCalculateTotal->TabIndex = 15;
+			this->buttonCalculateTotal->Text = L"Calculate Total";
+			this->buttonCalculateTotal->UseVisualStyleBackColor = true;
+			this->buttonCalculateTotal->Click += gcnew System::EventHandler(this, &MyForm::buttonCalculateTotal_Click);
+			// 
+			// buttonStatistics
+			// 
+			this->buttonStatistics->Location = System::Drawing::Point(180, 350);
+			this->buttonStatistics->Name = L"buttonStatistics";
+			this->buttonStatistics->Size = System::Drawing::Size(140, 35);
+			this->buttonStatistics->TabIndex = 16;
+			this->buttonStatistics->Text = L"Statistics";
+			this->buttonStatistics->UseVisualStyleBackColor = true;
+			this->buttonStatistics->Click += gcnew System::EventHandler(this, &MyForm::buttonStatistics_Click);
+			// 
 			// labelNameOfWorker
 			// 
 			this->labelNameOfWorker->AutoSize = true;
-			this->labelNameOfWorker->Location = System::Drawing::Point(60, 113);
+			this->labelNameOfWorker->Location = System::Drawing::Point(30, 100);
 			this->labelNameOfWorker->Name = L"labelNameOfWorker";
-			this->labelNameOfWorker->Size = System::Drawing::Size(44, 16);
-			this->labelNameOfWorker->TabIndex = 1;
-			this->labelNameOfWorker->Text = L"Name";
+			this->labelNameOfWorker->Size = System::Drawing::Size(56, 19);
+			this->labelNameOfWorker->TabIndex = 2;
+			this->labelNameOfWorker->Text = L"Name:";
 			// 
 			// comboBoxSelectEmployee
 			// 
 			this->comboBoxSelectEmployee->DropDownStyle = System::Windows::Forms::ComboBoxStyle::DropDownList;
 			this->comboBoxSelectEmployee->FormattingEnabled = true;
-			this->comboBoxSelectEmployee->Items->AddRange(gcnew cli::array< System::Object^  >(3) { L"Manager", L"Salesman", L"Engineer" });
-			this->comboBoxSelectEmployee->Location = System::Drawing::Point(63, 58);
+			this->comboBoxSelectEmployee->Items->AddRange(gcnew cli::array< System::Object^  >(4) {
+				L"Manager", L"Salesman", L"Engineer",
+					L"Specialist"
+			});
+			this->comboBoxSelectEmployee->Location = System::Drawing::Point(180, 40);
 			this->comboBoxSelectEmployee->Name = L"comboBoxSelectEmployee";
-			this->comboBoxSelectEmployee->Size = System::Drawing::Size(150, 24);
-			this->comboBoxSelectEmployee->TabIndex = 4;
+			this->comboBoxSelectEmployee->Size = System::Drawing::Size(150, 26);
+			this->comboBoxSelectEmployee->TabIndex = 7;
 			this->comboBoxSelectEmployee->SelectedIndexChanged += gcnew System::EventHandler(this, &MyForm::comboBoxSelectEmployee_SelectedIndexChanged);
 			// 
 			// textBoxNameOfWorker
 			// 
-			this->textBoxNameOfWorker->Location = System::Drawing::Point(63, 132);
+			this->textBoxNameOfWorker->Location = System::Drawing::Point(180, 100);
 			this->textBoxNameOfWorker->Name = L"textBoxNameOfWorker";
-			this->textBoxNameOfWorker->Size = System::Drawing::Size(150, 22);
-			this->textBoxNameOfWorker->TabIndex = 5;
+			this->textBoxNameOfWorker->Size = System::Drawing::Size(150, 26);
+			this->textBoxNameOfWorker->TabIndex = 8;
 			// 
 			// textBoxHourRate
 			// 
-			this->textBoxHourRate->Location = System::Drawing::Point(63, 192);
+			this->textBoxHourRate->Location = System::Drawing::Point(180, 140);
 			this->textBoxHourRate->Name = L"textBoxHourRate";
-			this->textBoxHourRate->Size = System::Drawing::Size(150, 22);
-			this->textBoxHourRate->TabIndex = 6;
+			this->textBoxHourRate->Size = System::Drawing::Size(150, 26);
+			this->textBoxHourRate->TabIndex = 9;
 			// 
 			// textBoxGetNumberOfItem
 			// 
-			this->textBoxGetNumberOfItem->Location = System::Drawing::Point(63, 259);
+			this->textBoxGetNumberOfItem->Location = System::Drawing::Point(180, 180);
 			this->textBoxGetNumberOfItem->Name = L"textBoxGetNumberOfItem";
-			this->textBoxGetNumberOfItem->Size = System::Drawing::Size(150, 22);
-			this->textBoxGetNumberOfItem->TabIndex = 9;
+			this->textBoxGetNumberOfItem->Size = System::Drawing::Size(150, 26);
+			this->textBoxGetNumberOfItem->TabIndex = 10;
+			// 
+			// textBoxWorkedHours
+			// 
+			this->textBoxWorkedHours->Location = System::Drawing::Point(180, 220);
+			this->textBoxWorkedHours->Name = L"textBoxWorkedHours";
+			this->textBoxWorkedHours->Size = System::Drawing::Size(150, 26);
+			this->textBoxWorkedHours->TabIndex = 11;
+			this->textBoxWorkedHours->Text = L"40";
+			// 
+			// textBoxSpecialistBonus
+			// 
+			this->textBoxSpecialistBonus->Location = System::Drawing::Point(180, 260);
+			this->textBoxSpecialistBonus->Name = L"textBoxSpecialistBonus";
+			this->textBoxSpecialistBonus->Size = System::Drawing::Size(150, 26);
+			this->textBoxSpecialistBonus->TabIndex = 12;
+			this->textBoxSpecialistBonus->Visible = false;
 			// 
 			// labelHoursRate
 			// 
 			this->labelHoursRate->AutoSize = true;
-			this->labelHoursRate->Location = System::Drawing::Point(60, 173);
-		 this->labelHoursRate->Name = L"labelHoursRate";
-		 this->labelHoursRate->Size = System::Drawing::Size(69, 16);
-		 this->labelHoursRate->TabIndex = 10;
-		 this->labelHoursRate->Text = L"Hours rate";
+			this->labelHoursRate->Location = System::Drawing::Point(30, 140);
+			this->labelHoursRate->Name = L"labelHoursRate";
+			this->labelHoursRate->Size = System::Drawing::Size(87, 19);
+			this->labelHoursRate->TabIndex = 3;
+			this->labelHoursRate->Text = L"Hour Rate:";
 			// 
 			// labelSelectEmployee
 			// 
 			this->labelSelectEmployee->AutoSize = true;
-			this->labelSelectEmployee->Location = System::Drawing::Point(60, 39);
+			this->labelSelectEmployee->Location = System::Drawing::Point(12, 43);
 			this->labelSelectEmployee->Name = L"labelSelectEmployee";
-			this->labelSelectEmployee->Size = System::Drawing::Size(110, 16);
-		 this->labelSelectEmployee->TabIndex = 12;
-		 this->labelSelectEmployee->Text = L"Select Employee";
+			this->labelSelectEmployee->Size = System::Drawing::Size(176, 19);
+			this->labelSelectEmployee->TabIndex = 1;
+			this->labelSelectEmployee->Text = L"Select Employee Type:";
 			// 
 			// labelGetNumberOfItem
 			// 
 			this->labelGetNumberOfItem->AutoSize = true;
-			this->labelGetNumberOfItem->Location = System::Drawing::Point(60, 231);
-		 this->labelGetNumberOfItem->Name = L"labelGetNumberOfItem";
-		 this->labelGetNumberOfItem->Size = System::Drawing::Size(0, 16);
-		 this->labelGetNumberOfItem->TabIndex = 13;
+			this->labelGetNumberOfItem->Location = System::Drawing::Point(30, 180);
+			this->labelGetNumberOfItem->Name = L"labelGetNumberOfItem";
+			this->labelGetNumberOfItem->Size = System::Drawing::Size(101, 19);
+			this->labelGetNumberOfItem->TabIndex = 4;
+			this->labelGetNumberOfItem->Text = L"Count/Items:";
+			// 
+			// labelWorkedHours
+			// 
+			this->labelWorkedHours->AutoSize = true;
+			this->labelWorkedHours->Location = System::Drawing::Point(30, 220);
+			this->labelWorkedHours->Name = L"labelWorkedHours";
+			this->labelWorkedHours->Size = System::Drawing::Size(120, 19);
+			this->labelWorkedHours->TabIndex = 5;
+			this->labelWorkedHours->Text = L"Worked Hours:";
+			// 
+			// labelSpecialistBonus
+			// 
+			this->labelSpecialistBonus->AutoSize = true;
+			this->labelSpecialistBonus->Location = System::Drawing::Point(30, 260);
+			this->labelSpecialistBonus->Name = L"labelSpecialistBonus";
+			this->labelSpecialistBonus->Size = System::Drawing::Size(135, 19);
+			this->labelSpecialistBonus->TabIndex = 6;
+			this->labelSpecialistBonus->Text = L"Specialist Bonus:";
+			this->labelSpecialistBonus->Visible = false;
+			// 
+			// richTextBoxResults
+			// 
+			this->richTextBoxResults->Location = System::Drawing::Point(30, 440);
+			this->richTextBoxResults->Name = L"richTextBoxResults";
+			this->richTextBoxResults->ReadOnly = true;
+			this->richTextBoxResults->Size = System::Drawing::Size(840, 280);
+			this->richTextBoxResults->TabIndex = 18;
+			this->richTextBoxResults->Text = L"";
 			// 
 			// menuStrip
 			// 
 			this->menuStrip->ImageScalingSize = System::Drawing::Size(20, 20);
-			this->menuStrip->Items->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(1) { this->fileToolStripMenuItem });
+			this->menuStrip->Items->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(2) {
+				this->fileToolStripMenuItem,
+					this->helpToolStripMenuItem
+			});
 			this->menuStrip->Location = System::Drawing::Point(0, 0);
 			this->menuStrip->Name = L"menuStrip";
-			this->menuStrip->Size = System::Drawing::Size(660, 28);
-		 this->menuStrip->TabIndex = 14;
-		 this->menuStrip->Text = L"menuStrip1";
+			this->menuStrip->Size = System::Drawing::Size(900, 28);
+			this->menuStrip->TabIndex = 0;
+			this->menuStrip->Text = L"menuStrip";
 			// 
 			// fileToolStripMenuItem
 			// 
@@ -217,54 +313,64 @@ namespace ooplab7prog {
 			});
 			this->fileToolStripMenuItem->Name = L"fileToolStripMenuItem";
 			this->fileToolStripMenuItem->Size = System::Drawing::Size(46, 24);
-			this->fileToolStripMenuItem->Text = L"File";
+			this->fileToolStripMenuItem->Text = L"&File";
 			// 
 			// saveToolStripMenuItem
 			// 
 			this->saveToolStripMenuItem->Name = L"saveToolStripMenuItem";
-			this->saveToolStripMenuItem->ShortcutKeys = static_cast<System::Windows::Forms::Keys>((System::Windows::Forms::Keys::Control | System::Windows::Forms::Keys::S));
-			this->saveToolStripMenuItem->Size = System::Drawing::Size(173, 26);
-			this->saveToolStripMenuItem->Text = L"Save";
+			this->saveToolStripMenuItem->Size = System::Drawing::Size(123, 26);
+			this->saveToolStripMenuItem->Text = L"&Save";
 			this->saveToolStripMenuItem->Click += gcnew System::EventHandler(this, &MyForm::saveToolStripMenuItem_Click);
 			// 
 			// exitToolStripMenuItem
 			// 
 			this->exitToolStripMenuItem->Name = L"exitToolStripMenuItem";
-			this->exitToolStripMenuItem->ShortcutKeys = static_cast<System::Windows::Forms::Keys>((System::Windows::Forms::Keys::Alt | System::Windows::Forms::Keys::F4));
-			this->exitToolStripMenuItem->Size = System::Drawing::Size(173, 26);
-			this->exitToolStripMenuItem->Text = L"Exit";
+			this->exitToolStripMenuItem->Size = System::Drawing::Size(123, 26);
+			this->exitToolStripMenuItem->Text = L"E&xit";
 			this->exitToolStripMenuItem->Click += gcnew System::EventHandler(this, &MyForm::exitToolStripMenuItem_Click);
 			// 
-			// richTextBoxResults
+			// helpToolStripMenuItem
 			// 
-			this->richTextBoxResults->Location = System::Drawing::Point(290, 55);
-			this->richTextBoxResults->Name = L"richTextBoxResults";
-			this->richTextBoxResults->Size = System::Drawing::Size(350, 340);
-			this->richTextBoxResults->TabIndex = 14;
-			this->richTextBoxResults->Text = L"Results will be displayed here...";
+			this->helpToolStripMenuItem->DropDownItems->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(1) { this->aboutToolStripMenuItem });
+			this->helpToolStripMenuItem->Name = L"helpToolStripMenuItem";
+			this->helpToolStripMenuItem->Size = System::Drawing::Size(55, 24);
+			this->helpToolStripMenuItem->Text = L"&Help";
+			// 
+			// aboutToolStripMenuItem
+			// 
+			this->aboutToolStripMenuItem->Name = L"aboutToolStripMenuItem";
+			this->aboutToolStripMenuItem->Size = System::Drawing::Size(133, 26);
+			this->aboutToolStripMenuItem->Text = L"&About";
+			this->aboutToolStripMenuItem->Click += gcnew System::EventHandler(this, &MyForm::aboutToolStripMenuItem_Click);
 			// 
 			// MyForm
 			// 
-			this->AutoScaleDimensions = System::Drawing::SizeF(8, 16);
+			this->AutoScaleDimensions = System::Drawing::SizeF(9, 18);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
-			this->ClientSize = System::Drawing::Size(660, 420);
-			this->Controls->Add(this->richTextBoxResults);
-			this->Controls->Add(this->buttonClearResults);
-			this->Controls->Add(this->comboBoxSelectEmployee);
-			this->Controls->Add(this->labelSelectEmployee);
-			this->Controls->Add(this->labelGetNumberOfItem);
-			this->Controls->Add(this->labelHoursRate);
-			this->Controls->Add(this->textBoxGetNumberOfItem);
-			this->Controls->Add(this->textBoxHourRate);
-			this->Controls->Add(this->textBoxNameOfWorker);
-			this->Controls->Add(this->labelNameOfWorker);
-			this->Controls->Add(this->buttonGetResult);
+			this->ClientSize = System::Drawing::Size(900, 750);
 			this->Controls->Add(this->menuStrip);
+			this->Controls->Add(this->labelSelectEmployee);
+			this->Controls->Add(this->comboBoxSelectEmployee);
+			this->Controls->Add(this->labelNameOfWorker);
+			this->Controls->Add(this->textBoxNameOfWorker);
+			this->Controls->Add(this->labelHoursRate);
+			this->Controls->Add(this->textBoxHourRate);
+			this->Controls->Add(this->labelGetNumberOfItem);
+			this->Controls->Add(this->textBoxGetNumberOfItem);
+			this->Controls->Add(this->labelWorkedHours);
+			this->Controls->Add(this->textBoxWorkedHours);
+			this->Controls->Add(this->labelSpecialistBonus);
+			this->Controls->Add(this->textBoxSpecialistBonus);
+			this->Controls->Add(this->buttonGetResult);
+			this->Controls->Add(this->buttonShowAll);
+			this->Controls->Add(this->buttonCalculateTotal);
+			this->Controls->Add(this->buttonStatistics);
+			this->Controls->Add(this->buttonClearResults);
+			this->Controls->Add(this->richTextBoxResults);
+			this->Font = (gcnew System::Drawing::Font(L"Arial", 9.75F));
 			this->MainMenuStrip = this->menuStrip;
 			this->Name = L"MyForm";
-			this->StartPosition = System::Windows::Forms::FormStartPosition::CenterScreen;
-			this->Text = L"Employee Management System";
-			this->Load += gcnew System::EventHandler(this, &MyForm::MyForm_Load);
+			this->Text = L"Lab 8";
 			this->menuStrip->ResumeLayout(false);
 			this->menuStrip->PerformLayout();
 			this->ResumeLayout(false);
@@ -272,233 +378,288 @@ namespace ooplab7prog {
 
 		}
 #pragma endregion
-	private: System::Void MyForm_Load(System::Object^ sender, System::EventArgs^ e) {}
 
-private: System::Void buttonGetResult_Click(System::Object^ sender, System::EventArgs^ e) {
-	string name;
-	lastResultText = "";
+	private: System::Void comboBoxSelectEmployee_SelectedIndexChanged(System::Object^ sender, System::EventArgs^ e) {
+		int index = comboBoxSelectEmployee->SelectedIndex;
 
-	if (String::IsNullOrWhiteSpace(textBoxNameOfWorker->Text)) {
-		richTextBoxResults->Text = "Error: You didn't enter a name!";
-		MessageBox::Show("You didn't enter a name!", "Warning", MessageBoxButtons::OK, MessageBoxIcon::Warning);
-		return;
-	}
-	name = msclr::interop::marshal_as<std::string>(textBoxNameOfWorker->Text);
+		labelSpecialistBonus->Visible = (index == 3);
+		textBoxSpecialistBonus->Visible = (index == 3);
 
-	if (String::IsNullOrWhiteSpace(textBoxHourRate->Text)) {
-		richTextBoxResults->Text = "Error: You didn't enter an hours rate!";
-		MessageBox::Show("You didn't enter a hours rate!", "Warning", MessageBoxButtons::OK, MessageBoxIcon::Warning);
-		return;
-	}
-	
-	String^ hourRateText = textBoxHourRate->Text;
-	for (int i = 0; i < hourRateText->Length; i++) {
-		if (!Char::IsDigit(hourRateText[i]) && hourRateText[i] != '.' && hourRateText[i] != ',') {
-			richTextBoxResults->Text = "Error: Invalid hour rate format! Use only numbers and dot.";
-			MessageBox::Show("Invalid hour rate format!", "Warning", MessageBoxButtons::OK, MessageBoxIcon::Warning);
-			return;
+		switch (index) {
+			case 0: // Manager
+				labelGetNumberOfItem->Text = L"Number of Workers:";
+				break;
+			case 1: // Salesman
+				labelGetNumberOfItem->Text = L"Products Sold:";
+				break;
+			case 2: // Engineer
+				labelGetNumberOfItem->Text = L"Fixed Details:";
+				break;
+			case 3: // Specialist
+				labelGetNumberOfItem->Text = L"Count/Items:";
+				break;
 		}
 	}
-	h_rate = Convert::ToDouble(textBoxHourRate->Text);
 
-	choise = comboBoxSelectEmployee->SelectedIndex;
-	if (choise < 0 || choise > 2) {
-		richTextBoxResults->Text = "Error: Please select an employee type!";
-		MessageBox::Show("Please select an employee type!", "Warning", MessageBoxButtons::OK, MessageBoxIcon::Warning);
-		return;
-	}
+	private: System::Void buttonGetResult_Click(System::Object^ sender, System::EventArgs^ e) {
+		if (employeeCount >= 10) {
+			richTextBoxResults->Text = "Error: Maximum 10 employees allowed!";
+			MessageBox::Show("Maximum capacity reached!", "Warning", MessageBoxButtons::OK, MessageBoxIcon::Warning);
+			return;
+		}
 
-	if (String::IsNullOrWhiteSpace(textBoxGetNumberOfItem->Text)) {
-		richTextBoxResults->Text = "Error: You didn't enter required data!";
-		MessageBox::Show("Please enter all required fields!", "Warning", MessageBoxButtons::OK, MessageBoxIcon::Warning);
-		return;
-	}
+		string name;
+		if (String::IsNullOrWhiteSpace(textBoxNameOfWorker->Text)) {
+			richTextBoxResults->Text = "Error: You didn't enter a name!";
+			MessageBox::Show("You didn't enter a name!", "Warning", MessageBoxButtons::OK, MessageBoxIcon::Warning);
+			return;
+		}
+		name = marshal_as<string>(textBoxNameOfWorker->Text);
 
-	String^ itemText = textBoxGetNumberOfItem->Text;
-	for (int i = 0; i < itemText->Length; i++) {
-		if (!Char::IsDigit(itemText[i])) {
-			richTextBoxResults->Text = "Error: Invalid number format! Use only digits.";
+		if (String::IsNullOrWhiteSpace(textBoxHourRate->Text)) {
+			richTextBoxResults->Text = "Error: You didn't enter an hour rate!";
+			MessageBox::Show("You didn't enter an hour rate!", "Warning", MessageBoxButtons::OK, MessageBoxIcon::Warning);
+			return;
+		}
+
+		double rate = 0;
+		if (!String::IsNullOrWhiteSpace(textBoxHourRate->Text)) {
+			rate = Convert::ToDouble(textBoxHourRate->Text);
+		}
+		else {
+			richTextBoxResults->Text = "Error: Invalid hour rate format!";
+			MessageBox::Show("Invalid hour rate!", "Warning", MessageBoxButtons::OK, MessageBoxIcon::Warning);
+			return;
+		}
+
+		choice = comboBoxSelectEmployee->SelectedIndex;
+		if (choice < 0 || choice > 3) {
+			richTextBoxResults->Text = "Error: Please select an employee type!";
+			MessageBox::Show("Please select an employee type!", "Warning", MessageBoxButtons::OK, MessageBoxIcon::Warning);
+			return;
+		}
+
+		if (String::IsNullOrWhiteSpace(textBoxGetNumberOfItem->Text)) {
+			richTextBoxResults->Text = "Error: You didn't enter required data!";
+			MessageBox::Show("Please enter all required fields!", "Warning", MessageBoxButtons::OK, MessageBoxIcon::Warning);
+			return;
+		}
+
+		int items = 0;
+		if (!String::IsNullOrWhiteSpace(textBoxGetNumberOfItem->Text)) {
+			items = Convert::ToInt32(textBoxGetNumberOfItem->Text);
+		}
+		else {
+			richTextBoxResults->Text = "Error: Invalid number format!";
 			MessageBox::Show("Invalid input!", "Warning", MessageBoxButtons::OK, MessageBoxIcon::Warning);
 			return;
 		}
-	}
-	num_of_item = Convert::ToInt32(textBoxGetNumberOfItem->Text);
-	
-	if (choise == 0) {
-		// Manager Employee
-		employee[employeeCount] = new CManagerEmployee(name, h_rate, num_of_item);
-		
-		lastResultText = "✓ Employee Added Successfully!\n\n";
-		lastResultText += "Employee Type: Manager\n";
-		lastResultText += "Name: " + textBoxNameOfWorker->Text + "\n";
-		lastResultText += "Hour Rate: $" + h_rate.ToString() + "/hour\n";
-		lastResultText += "Number of Workers: " + num_of_item + "\n\n";
-		
-		lastResultText += "PrintEmployeeInfo() was called\n";
-		PrintEmployeeInfo(employee[employeeCount]);  
-		
-		employeeCount++;
-		
-		lastResultText += "Total Employees in System: " + employeeCount + "\n";
-		richTextBoxResults->Text = lastResultText;
-	}
-	else if (choise == 1) {
-		// Salesman Employee
-		employee[employeeCount] = new CSalesmanEmployee(name, h_rate, num_of_item);
-		
-		lastResultText = "Employee Added Successfully!\n\n";
-		lastResultText += "Employee Type: Salesman\n";
-		lastResultText += "Name: " + textBoxNameOfWorker->Text + "\n";
-		lastResultText += "Hour Rate: $" + h_rate.ToString() + "/hour\n";
-		lastResultText += "Number of Products Sold: " + num_of_item + "\n\n";
-		
-		lastResultText += "PrintEmployeeInfo() was called\n";
-		PrintEmployeeInfo(employee[employeeCount]);
-		
-		employeeCount++;
-		
-		lastResultText += "Total Employees in System: " + employeeCount + "\n";
-		richTextBoxResults->Text = lastResultText;
-	}
-	else if (choise == 2) {
-		// Engineer Employee
-		employee[employeeCount] = new CEngineerEmployee(name, h_rate, num_of_item);
-		
-		lastResultText = "✓ Employee Added Successfully!\n\n";
-		lastResultText += "Employee Type: Engineer\n";
-		lastResultText += "Name: " + textBoxNameOfWorker->Text + "\n";
-		lastResultText += "Hour Rate: $" + h_rate.ToString() + "/hour\n";
-		lastResultText += "Number of Fixed Details: " + num_of_item + "\n\n";
-		
-		lastResultText += "PrintEmployeeInfo()\n";
-		PrintEmployeeInfo(employee[employeeCount]);
-		
-		employeeCount++;
-		
-		lastResultText += "Total Employees in System: " + employeeCount + "\n";
-		richTextBoxResults->Text = lastResultText;
-	}
-}
 
-private: System::Void saveToolStripMenuItem_Click(System::Object^ sender, System::EventArgs^ e) {
-	if (employeeCount == 0) {
-		MessageBox::Show("No employees to save! Please add employees first.", "Information", MessageBoxButtons::OK, MessageBoxIcon::Information);
-		return;
-	}
+		lastResultText = "";
 
-	SaveFileDialog^ path = gcnew SaveFileDialog();
-	path->Filter = "Text files (*.txt)|*.txt|All files (*.*)|*.*";
-	path->DefaultExt = "txt";
-	path->FileName = "EmployeeResults";
-	
-	if (path->ShowDialog() == System::Windows::Forms::DialogResult::OK) {
-		msclr::interop::marshal_context context;
-		std::string file_path = context.marshal_as<std::string>(path->FileName);
-		ofstream out_file(file_path);
-
-		if (out_file.is_open()) {
-			out_file << "Employee Management system\n";
-			
-			out_file << "Total Employees: " << employeeCount << std::endl;
-			out_file << std::endl;
-
-			out_file << "CalculateTotalSalary():\n";
-			out_file << "Number of employee: " << employeeCount << " \n";
-			out_file << "\n";
-			
-			double totalSalary = CalculateTotalSalary(employee, employeeCount, h_rate);
-	
-			
-			out_file << "Sallary calculation:\n";
-			out_file << "Total Salary (for " << h_rate << " hours): $" << totalSalary << std::endl;
-			if (employeeCount > 0) {
-				out_file << "Average Salary per Employee: $" << (totalSalary / employeeCount) << std::endl;
+		if (choice == 0) {
+			// Manager
+			employee[employeeCount] = new CManagerEmployee(name, rate, items);
+			lastResultText = "Manager added!\n";
+			lastResultText += "Name: " + textBoxNameOfWorker->Text + "\n";
+			lastResultText += "Hour Rate: $" + rate.ToString() + "/hour\n";
+			lastResultText += "Workers Managed: " + items + "\n";
+		}
+		else if (choice == 1) {
+			// Salesman
+			employee[employeeCount] = new CSalesmanEmployee(name, rate, items);
+			lastResultText = "Salesman added!\n";
+			lastResultText += "Name: " + textBoxNameOfWorker->Text + "\n";
+			lastResultText += "Hour Rate: $" + rate.ToString() + "/hour\n";
+			lastResultText += "Products Sold: " + items + "\n";
+		}
+		else if (choice == 2) {
+			// Engineer
+			employee[employeeCount] = new CEngineerEmployee(name, rate, items);
+			lastResultText = "Engineer added!\n";
+			lastResultText += "Name: " + textBoxNameOfWorker->Text + "\n";
+			lastResultText += "Hour Rate: $" + rate.ToString() + "/hour\n";
+			lastResultText += "Fixed Details: " + items + "\n";
+		}
+		else if (choice == 3) {
+			// Specialist
+			if (String::IsNullOrWhiteSpace(textBoxSpecialistBonus->Text)) {
+				richTextBoxResults->Text = "Error: You didn't enter specialist bonus!";
+				MessageBox::Show("Please enter specialist bonus!", "Warning", MessageBoxButtons::OK, MessageBoxIcon::Warning);
+				return;
 			}
-			out_file << std::endl;
 
-			out_file << "Employee details:\n";
-
-			for (int i = 0; i < employeeCount; i++) {
-				out_file << "\nEmployee #" << (i + 1) << "\n";
-				
-				if (employee[i] != nullptr) {
-
-					CManagerEmployee* manager = dynamic_cast<CManagerEmployee*>(employee[i]);
-					if (manager != nullptr) {
-						out_file << "Type: Manager\n";
-						out_file << "Salary: $" << manager->CalculateSalaryForHours(h_rate) << std::endl;
-					}
-					
-					CSalesmanEmployee* salesman = dynamic_cast<CSalesmanEmployee*>(employee[i]);
-					if (salesman != nullptr) {
-						out_file << "Type: Salesman\n";
-						out_file << "Salary: $" << salesman->CalculateSalaryForHours(h_rate) << std::endl;
-					}
-					
-					CEngineerEmployee* engineer = dynamic_cast<CEngineerEmployee*>(employee[i]);
-					if (engineer != nullptr) {
-						out_file << "Type: Engineer\n";
-						out_file << "Salary: $" << engineer->CalculateSalaryForHours(h_rate) << std::endl;
-					}
-				}
+			double bonus = 0;
+			if (!String::IsNullOrWhiteSpace(textBoxSpecialistBonus->Text)) {
+				bonus = Convert::ToDouble(textBoxSpecialistBonus->Text);
 			}
-			out_file.close();
-			MessageBox::Show("Results saved successfully to:\n" + path->FileName, "Success", MessageBoxButtons::OK, MessageBoxIcon::Asterisk);
+			else {
+				richTextBoxResults->Text = "Error: Invalid bonus format!";
+				MessageBox::Show("Invalid bonus!", "Warning", MessageBoxButtons::OK, MessageBoxIcon::Warning);
+				return;
+			}
+
+			employee[employeeCount] = new CSpecialistEmployee(name, rate, items, items / 2, bonus);
+			lastResultText = "Specialist added\n";
+			lastResultText += "Name: " + textBoxNameOfWorker->Text + "\n";
+			lastResultText += "Hour Rate: $" + rate.ToString() + "/hour\n";
+			lastResultText += "Workers: " + items + " | Sales: " + (items / 2) + "\n";
+			lastResultText += "Specialist Bonus: $" + bonus.ToString() + "\n";
+		}
+
+		lastResultText += "\nTotal Employees: " + (++employeeCount) + "/10\n";
+		richTextBoxResults->Text = lastResultText;
+	}
+
+	private: System::Void buttonShowAll_Click(System::Object^ sender, System::EventArgs^ e) {
+		DisplayAllEmployeesInfo(employee, employeeCount);
+		
+		string output = "";
+		ostringstream oss;
+		
+		for (int i = 0; i < employeeCount; i++) {
+			if (employee[i] != nullptr) {
+				cout.flush();
+			}
+		}
+
+		String^ msg = "All employees information displayed in console window\n";
+		msg += "Total employees in system: " + employeeCount + "\n\n";
+		richTextBoxResults->Text = msg;
+	}
+
+	private: System::Void buttonCalculateTotal_Click(System::Object^ sender, System::EventArgs^ e) {
+		if (employeeCount == 0) {
+			richTextBoxResults->Text = "Error: No employees added!";
+			return;
+		}
+
+		if (String::IsNullOrWhiteSpace(textBoxWorkedHours->Text)) {
+			richTextBoxResults->Text = "Error: Please enter worked hours!";
+			MessageBox::Show("Please enter worked hours!", "Warning", MessageBoxButtons::OK, MessageBoxIcon::Warning);
+			return;
+		}
+
+		double hours = 0;
+		if (!String::IsNullOrWhiteSpace(textBoxWorkedHours->Text)) {
+			hours = Convert::ToDouble(textBoxWorkedHours->Text);
 		}
 		else {
-			MessageBox::Show("Error opening file for writing!", "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
+			richTextBoxResults->Text = "Error: Invalid hours format!";
+			MessageBox::Show("Invalid hours!", "Warning", MessageBoxButtons::OK, MessageBoxIcon::Warning);
+			return;
+		}
+
+		double total = CalculateTotalSalary(employee, employeeCount, hours);
+
+		String^ result = "Salary calculation\n";
+		result += "Working Hours: " + hours + "\n";
+		result += "Total Employees: " + employeeCount + "\n\n";
+		result += "Breakdown:\n";
+
+		for (int i = 0; i < employeeCount; i++) {
+			if (employee[i] != nullptr) {
+				double salary = employee[i]->CalculateSalaryForHours(hours);
+				result += "  Employee " + (i + 1) + ": $" + salary.ToString("F2") + "\n";
+			}
+		}
+
+		result += "\nTotal salary: $" + total.ToString("F2") + "\n";
+		richTextBoxResults->Text = result;
+	}
+
+	private: System::Void buttonStatistics_Click(System::Object^ sender, System::EventArgs^ e) {
+		if (employeeCount == 0) {
+			richTextBoxResults->Text = "Error: No employees added!";
+			return;
+		}
+
+		CountEmployeesByType(employee, employeeCount);
+
+		int managers = 0, salesmen = 0, engineers = 0, specialists = 0;
+
+		for (int i = 0; i < employeeCount; i++) {
+			if (employee[i] != nullptr) {
+				if (dynamic_cast<CSpecialistEmployee*>(employee[i]) != nullptr)
+					specialists++;
+				else if (dynamic_cast<CManagerEmployee*>(employee[i]) != nullptr)
+					managers++;
+				else if (dynamic_cast<CSalesmanEmployee*>(employee[i]) != nullptr)
+					salesmen++;
+				else if (dynamic_cast<CEngineerEmployee*>(employee[i]) != nullptr)
+					engineers++;
+			}
+		}
+
+		String^ stats = "Employee statistic\n";
+		stats += "Total Employees: " + employeeCount + "/10\n\n";
+		stats += "  Managers: " + managers + "\n";
+		stats += "  Salesmen: " + salesmen + "\n";
+		stats += "  Engineers: " + engineers + "\n";
+		stats += "  Specialists: " + specialists + "\n";
+
+		richTextBoxResults->Text = stats;
+	}
+
+	private: System::Void buttonClearResults_Click(System::Object^ sender, System::EventArgs^ e) {
+		richTextBoxResults->Clear();
+		textBoxNameOfWorker->Clear();
+		textBoxHourRate->Clear();
+		textBoxGetNumberOfItem->Clear();
+		textBoxSpecialistBonus->Clear();
+		comboBoxSelectEmployee->SelectedIndex = 0;
+	}
+
+	private: System::Void saveToolStripMenuItem_Click(System::Object^ sender, System::EventArgs^ e) {
+		saveFileTxt->FileName = "EmployeeData.txt";
+		if (saveFileTxt->ShowDialog() == System::Windows::Forms::DialogResult::OK)
+		{
+			StreamWriter^ writer = gcnew StreamWriter(saveFileTxt->FileName);
+			writer->WriteLine("Employee data");
+			writer->WriteLine("Total Employees: " + employeeCount);
+			writer->WriteLine("");
+			
+			for (int i = 0; i < employeeCount; i++) {
+				if (employee[i] != nullptr) {
+					writer->WriteLine("Employee #" + (i + 1));
+					writer->WriteLine("Name: " + gcnew String(employee[i]->GetName().c_str()));
+					writer->WriteLine("Hour Rate: $" + employee[i]->GetHourRate());
+					writer->WriteLine("Salary (40 hrs): $" + employee[i]->CalculateSalaryForHours(40));
+					writer->WriteLine("");
+				}
+			}
+
+			writer->Close();
+			MessageBox::Show("Data saved successfully!", "Success", MessageBoxButtons::OK, MessageBoxIcon::Information);
 		}
 	}
-}
 
-private: System::Void comboBoxSelectEmployee_SelectedIndexChanged(System::Object^ sender, System::EventArgs^ e) {
-	int choice = comboBoxSelectEmployee->SelectedIndex;
-	switch (choice)
-	{
-	case 0:
-		labelGetNumberOfItem->Text = "Enter number of workers";
-		break;
-	case 1:
-		labelGetNumberOfItem->Text = "Enter number of sold products";
-		break;
-	case 2:
-		labelGetNumberOfItem->Text = "Enter number of created details";
-		break;
-	default:
-		break;
+	private: System::Void exitToolStripMenuItem_Click(System::Object^ sender, System::EventArgs^ e) {
+		this->Close();
 	}
-}
 
-private: System::Void buttonClearResults_Click(System::Object^ sender, System::EventArgs^ e) {
-	for (int i = 0; i < employeeCount; i++) {
-		if (employee[i] != nullptr) {
-			delete employee[i];
-			employee[i] = nullptr;
-		}
+	private: System::Void aboutToolStripMenuItem_Click(System::Object^ sender, System::EventArgs^ e) {
+		//String^ about = "Lab 8\n\n";
+		//about += "This application demonstrates:\n";
+		//about += "1. POLYMORPHISM:\n";
+		//about += "   - Abstract base class (CEmployee) with pure virtual functions\n";
+		//about += "   - Virtual destructor for proper cleanup\n";
+		//about += "   - Polymorphic function calls through base class pointers\n\n";
+		//about += "2. DYNAMIC_CAST:\n";
+		//about += "   - Safe type conversion at runtime\n";
+		//about += "   - Type checking before operations\n\n";
+		//about += "3. MULTIPLE INHERITANCE:\n";
+		//about += "   - CSpecialistEmployee inherits from CManagerEmployee and CSalesmanEmployee\n";
+		//about += "   - VIRTUAL INHERITANCE to solve diamond problem\n";
+		//about += "   - EXPLICIT ACCESS using scope resolution (::)\n";
+		//about += "   - FUNCTION OVERRIDING for ambiguity resolution\n\n";
+		//about += "Employee Types:\n";
+		//about += "• Manager: $31/hour + $13 per worker\n";
+		//about += "• Salesman: $25/hour + $50 per sale\n";
+		//about += "• Engineer: $35/hour + $20 per detail fixed\n";
+		//about += "• Specialist: Combined manager + salesman roles\n";
+
+		//MessageBox::Show(about, "About Lab 8", MessageBoxButtons::OK, MessageBoxIcon::Information);
 	}
-	employeeCount = 0;
-
-	richTextBoxResults->Text = "Results will be displayed here...";
-	textBoxNameOfWorker->Text = "";
-	textBoxHourRate->Text = "";
-	textBoxGetNumberOfItem->Text = "";
-	comboBoxSelectEmployee->SelectedIndex = -1;
-	lastResultText = "";
+	};
 }
-
-private: System::Void exitToolStripMenuItem_Click(System::Object^ sender, System::EventArgs^ e) {
-	this->Close();
-}
-
-private: System::Void textBoxHours_TextChanged(System::Object^ sender, System::EventArgs^ e) {}
-};
-}
-
-
-/*
-TODO:
-	output Calculate sallary for employee that depends on h_rate individually.
-	dynamically saved data about h_rate. ^^^
-	uml diagram
-
-*/

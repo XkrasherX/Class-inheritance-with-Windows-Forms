@@ -1,15 +1,24 @@
 #pragma once
 #include "CEmployee.h"
-#include "IProductivityTracker.h"
 
-class CManagerEmployee : public virtual CEmployee, public virtual IProductivityTracker {
+
+class CManagerEmployee : public virtual CEmployee
+{
 protected:
 	int numOfWorkers;
+
 public:
 	CManagerEmployee();
 	CManagerEmployee(std::string name, double hour_rate, int numOfWorkers);
+	~CManagerEmployee() override;
+
 	void PrintName() const override;
 	double CalculateSalaryForHours(double dWorkedHours) const override;
-	void DisplayProductivity() const override;
-	int GetProductivityScore() const override;
+	void DisplayInfo() const override;
+	
+	int GetNumOfWorkers() const { return numOfWorkers; }
+	void SetNumOfWorkers(int workers) { numOfWorkers = workers; }
+
+
+	int GetProductivityScore() const;
 };

@@ -124,8 +124,8 @@
     <ClCompile Include="CEngineerEmployee.cpp" />
     <ClCompile Include="CManagerEmployee.cpp" />
     <ClCompile Include="CSalesmanEmployee.cpp" />
+    <ClCompile Include="CSpecialistEmployee.cpp" />
     <ClCompile Include="EmployeeUtils.cpp" />
-    <ClCompile Include="IProductivityTracker.cpp" />
     <ClCompile Include="MyForm.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -133,8 +133,8 @@
     <ClInclude Include="CEngineerEmployee.h" />
     <ClInclude Include="CManagerEmployee.h" />
     <ClInclude Include="CSalesmanEmployee.h" />
+    <ClInclude Include="CSpecialistEmployee.h" />
     <ClInclude Include="EmployeeUtils.h" />
-    <ClInclude Include="IProductivityTracker.h" />
     <ClInclude Include="MyForm.h">
       <FileType>CppForm</FileType>
     </ClInclude>
